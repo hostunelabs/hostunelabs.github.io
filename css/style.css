@@ -1417,11 +1417,11 @@ p [style*='max-width'] {
 
 .title-style-3 {
 	text-transform: uppercase;
-	letter-spacing: .4em;
-	padding: 0 0 0 10px;
-	color: #016761;
-	text-shadow: 1px 1px #f8f0f0;
-	font-weight: 600;
+    letter-spacing: .4em;
+    padding: 0 0 0 10px;
+    color: #145f91;
+    text-shadow: 1px 1px #ffffff;
+    font-weight: 700;
 }
 
 @media (min-width: 768px) {
@@ -1464,6 +1464,7 @@ p [style*='max-width'] {
 
 .brand .brand-logo-desktop {
 	display: none;
+	margin-top: 20px;
 }
 
 @media (min-width: 992px) {
@@ -1472,6 +1473,7 @@ p [style*='max-width'] {
 	}
 	.brand .brand-logo-mobile {
 		display: none;
+		margin-top: 12px;
 	}
 }
 
