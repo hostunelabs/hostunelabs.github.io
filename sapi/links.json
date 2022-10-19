@@ -17,4 +17,9 @@
 		"code" : "LOCALHOST",
 		"url" : "local"
 	}
+	,
+	{
+		"code" : "HCHCKM",
+		"url" : "https://117.247.114.19:62001/api/ping"
+	}
 ]
