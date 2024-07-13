@@ -1,0 +1,12 @@
+[
+	{
+		"code" : "ANS",
+		"url" : "https://202.88.227.59:62001",
+		"hospital_name" : "Ansar Hospital"
+	},
+	{
+		"code" : "NAZ",
+		"url" : "https://202.88.227.59:62001",
+		"hospital_name" : "Nazareth Hospital"
+	}
+]
