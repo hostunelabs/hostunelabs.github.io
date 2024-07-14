@@ -1,12 +1,12 @@
 [
 	{
-		"code" : "ANS",
-		"url" : "https://202.88.227.59:62001",
-		"hospital_name" : "Ansar Hospital"
+		"hospital_code" : "ANS",
+		"hospital_name" : "Ansar Hospital",
+		"url" : "https://202.88.227.59:62001"
 	},
 	{
-		"code" : "NAZ",
-		"url" : "https://202.88.227.59:62001",
-		"hospital_name" : "Nazareth Hospital"
+		"hospital_code" : "NAZ",
+		"hospital_name" : "Nazareth Hospital",
+		"url" : "https://202.88.227.59:62001"
 	}
 ]
