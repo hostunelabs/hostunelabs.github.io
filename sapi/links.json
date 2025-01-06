@@ -88,5 +88,9 @@
 	{
 		"code" : "HOLYCARE",
 		"url" : "https://103.119.171.60:62000"
+	},
+	{
+		"code" : "DEVIPRASAD",
+		"url" : "https://103.139.65.173:62000"
 	}
 ]
