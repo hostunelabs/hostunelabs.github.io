@@ -10,7 +10,9 @@
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/fonts.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/extra.css">
     <style>.ie-panel{display: none;background: #212121;padding: 10px 0;box-shadow: 3px 3px 5px 0 rgba(0,0,0,.3);clear: both;text-align:center;position: relative;z-index: 1;} html.ie-10 .ie-panel, html.lt-ie-10 .ie-panel {display: block;}</style>
+    
   </head>
   <body>
     <div class="ie-panel"><a href="http://windows.microsoft.com/en-US/internet-explorer/"><img src="images/ie8-panel/warning_bar_0000_us.jpg" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today."></a></div>
@@ -29,9 +31,35 @@
 	<img src="images/banner/foreground-04-1600x60.png" 
 	srcset="images/banner/foreground-04-1600x60.png 1x, images/banner/foreground-04-3200x120.png 2x" alt="" width="1600" height="310"></a> -->
       <!-- Page Header-->
+      
+      <!-- Banner -->
       <div class="banner2">
-          <p style="font-weight: 400;" class="text-right">Sales Enquiry : 📞 9744554567, 9446623322 | ✉ info@hostune.in &nbsp; </p>
+        <p class="text-right">Sales Enquiry : 📞 9744554567, 9446623322 | ✉ info@hostune.in &nbsp; </p>
+      </div>
+
+      <!-- Navbar -->
+      <nav class="navbar">
+        <div class="navbar-container">
+
+          <!-- Hamburger Menu for Mobile -->
+          <button class="navbar-toggle" aria-label="Toggle navigation">
+            <span class="navbar-toggle-icon">&#9776;</span>
+          </button>
+
+          <!-- Navbar Links -->
+          <ul class="navbar-menu">
+            <li><a href="#">Home</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="download.html">Download</a></li>
+            <li><a href="#contactus">About Us</a></li>
+          </ul>
         </div>
+      </nav>
+            
+      <!-- end of Navbar -->
+
+
       <header class="page-header">
         
         <!-- RD Navbar-->
@@ -134,7 +162,7 @@
         </div>
       </section>
       <!-- About Us-->
-      <section class="section section-full section-xxl bg-default" id="about">
+      <section class="section section-full section-xxl bg-default" id="services">
         <div class="container">
           <div class="row row-30 justify-content-center">
             <div class="col-sm-9 col-md-5 cube-classic-wrap">
@@ -176,7 +204,7 @@
         <div class="background-custom-1 bg-default"></div>
       </section>
       <!-- Portfolio-->
-      <section class="section section-full section-xl bg-default text-md-center" id="projects">
+      <section class="section section-full section-xl bg-default text-md-center" id="features">
         <div class="container">
           <div class="subtitle-classic wow fadeInUp">Portfolio</div>
           <h2><span class="d-inline-block wow fadeInLeft">Our featured</span> <span class="text-primary d-inline-block wow fadeInRight">Services</span>
@@ -270,7 +298,7 @@
             </div>
           </form>
         </div>
-        <div class="container">
+        <div class="container" id="contactus">
           <div class="d-inline-block wow fadeInUp">HOSTUNE LABS PRIVATE LIMITED <br>CIN: U72900KL2021PTC072629 <br> Kerala, India<br>Contact Sales : 9744554567 | 9446623322 | 9048927482 
                   <br> Email : info@hostune.in  </div>
           <div class="footer-classic-list-social wow fadeInUp">

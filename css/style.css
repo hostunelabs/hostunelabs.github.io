@@ -4376,13 +4376,8 @@ textarea.form-input {
 
 }
 
-.banner2 {
-	position:fixed;
-    top:0;
-    width:100%;
-    z-index:100;
-	background: #f8f9fa;
-}
+
+
 
 .section-banner img {
 	max-width: 100%;
