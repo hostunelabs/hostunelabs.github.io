@@ -16,6 +16,7 @@
   background-color: #333;
   color: white;
   padding: 5px 10px;
+  z-index: 10000;
 }
 
 .navbar-container {
