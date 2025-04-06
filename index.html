@@ -1,320 +1,925 @@
 <!DOCTYPE html>
-<html class="wide wow-animation" lang="en">
-  <head>
-    <title>Hostune Labs</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Montserrat:300%7CQuestrial">
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/fonts.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/extra.css">
-    <style>.ie-panel{display: none;background: #212121;padding: 10px 0;box-shadow: 3px 3px 5px 0 rgba(0,0,0,.3);clear: both;text-align:center;position: relative;z-index: 1;} html.ie-10 .ie-panel, html.lt-ie-10 .ie-panel {display: block;}</style>
-    
-  </head>
-  <body>
-    <div class="ie-panel"><a href="http://windows.microsoft.com/en-US/internet-explorer/"><img src="images/ie8-panel/warning_bar_0000_us.jpg" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today."></a></div>
-    <div class="preloader">
-      <div class="preloader-body">
-        <div class="cssload-spinner"><span class="cssload-cube cssload-cube0"></span><span class="cssload-cube cssload-cube1"></span><span class="cssload-cube cssload-cube2"></span><span class="cssload-cube cssload-cube3"></span><span class="cssload-cube cssload-cube4"></span><span class="cssload-cube cssload-cube5"></span><span class="cssload-cube cssload-cube6"></span><span class="cssload-cube cssload-cube7"></span><span class="cssload-cube cssload-cube8"></span><span class="cssload-cube cssload-cube9"></span><span class="cssload-cube cssload-cube10"></span><span class="cssload-cube cssload-cube11"></span><span class="cssload-cube cssload-cube12"></span><span class="cssload-cube cssload-cube13"></span><span class="cssload-cube cssload-cube14"></span><span class="cssload-cube cssload-cube15"></span>
-        </div>
-        <h2 class="preloader-title">Hostune Labs</h2>
-      </div>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Best Hospital Management System in India | Hostune</title>
+  <meta name="description" content="Discover the best HMS software for hospitals in India. Streamline operations, patient care, and billing with our top-rated hospital management system.">
+  <meta name="keywords" content="Hospital Management System, HMS, EMR, EHR, Electronic Medical Records, Electronic Health Records, LIS, LIMS, Laboratory Machine Integration, HMS Software, Best Hospital management Software, Best EMR, Best HMS Software, Best Clinic Software, Clinic Management Software, HMS Modules, Hospital Management System, Healthcare Management Software, HL7, ASTM, NABH, PACS, DICOM, ABHA, ABDM, NHA, National Health Authority, EKA, Medical College Software, Speciality Management System, User friendly HMS, User friendly Clinic Management System">
+  <meta name="author" content="renjithrs123"> 
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+
+
+</head>
+
+<body class="index-page">
+
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid position-relative d-flex align-items-center justify-content-between">
+
+      <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0">
+        <!-- Uncomment the line below if you also wish to use an image logo -->
+         <img src="assets/img/logo.png" alt="">
+        <h1 class="sitename">Hostune</h1>
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="index.html#hero" class="active">Home</a></li>
+          <li><a href="index.html#about">About</a></li>
+          <li><a href="solutions-details.html">Solutions</a></li>
+          <li><a href="index.html#products">Our Products</a></li>
+          <!--<li><a href="index.html#pricing">Pricing</a></li>
+          <li><a href="index.html#team">Team</a></li> 
+          <li><a href="blog.html">Blog</a></li>-->
+<!--           <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+            <ul>
+              <li><a href="#">Dropdown 1</a></li>
+              <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                <ul>
+                  <li><a href="#">Deep Dropdown 1</a></li>
+                  <li><a href="#">Deep Dropdown 2</a></li>
+                  <li><a href="#">Deep Dropdown 3</a></li>
+                  <li><a href="#">Deep Dropdown 4</a></li>
+                  <li><a href="#">Deep Dropdown 5</a></li>
+                </ul>
+              </li>
+              <li><a href="#">Dropdown 2</a></li>
+              <li><a href="#">Dropdown 3</a></li>
+              <li><a href="#">Dropdown 4</a></li>
+            </ul>
+          </li> 
+          <li><a href="index.html#contact">Contact</a></li>
+          -->
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+     <!--  <a class="btn-getstarted" href="index.html#contact">Contact Us</a> -->
+
     </div>
-    <div class="page">
-<!-- 	<a class="section section-banner d-none d-xl-flex" href="https://www.templatemonster.com/intense-multipurpose-html-template.html" 
-	style="background-image: url(images/banner/background-04-1920x60.jpg);
-	background-image: -webkit-image-set( url(images/banner/background-04-1920x60.jpg) 1x, url(images/banner/background-04-3840x120.jpg) 2x )" 
-	target="_blank">
-	<img src="images/banner/foreground-04-1600x60.png" 
-	srcset="images/banner/foreground-04-1600x60.png 1x, images/banner/foreground-04-3200x120.png 2x" alt="" width="1600" height="310"></a> -->
-      <!-- Page Header-->
-      
-      <!-- Banner -->
-      <div class="banner2">
-        <p class="text-right">Sales Enquiry : 📞 9744554567, 9446623322 | ✉ info@hostune.in &nbsp; </p>
+  </header>
+
+  <main class="main">
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero section dark-background">
+
+      <img src="assets/img/cover1.png" alt="" data-aos="fade-in">
+
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-10">
+            <h2 data-aos="fade-up" data-aos-delay="100">Harmonizing Healthcare Systems</h2>
+            <p data-aos="fade-up" data-aos-delay="200">Streamline Operations, Enhance Patient Care, and Improve Efficiency with the best HMS Solution - Tune HIS</p>
+          </div>
+<!--           <div class="col-lg-5" data-aos="fade-up" data-aos-delay="300">
+            <form action="forms/newsletter.php" method="post" class="php-email-form">
+              <div class="sign-up-form"><input type="email" name="email"><input type="submit" value="Subscribe"></div>
+              <div class="loading">Loading</div>
+              <div class="error-message"></div>
+              <div class="sent-message">Your subscription request has been sent. Thank you!</div>
+            </form>
+          </div> -->
+        </div>
       </div>
 
-      <!-- Navbar -->
-      <nav class="navbar">
-        <div class="navbar-container">
+    </section><!-- /Hero Section -->
 
-          <!-- Hamburger Menu for Mobile -->
-          <button class="navbar-toggle" aria-label="Toggle navigation">
-            <span class="navbar-toggle-icon">&#9776;</span>
-          </button>
+    <!-- facilities section -->
+     <!-- facilities Section -->
+    <section id="clients" class="clients section">
 
-          <!-- Navbar Links -->
-          <ul class="navbar-menu">
+      <div class="container" data-aos="fade-up">
+
+        <div class="row gy-4">
+
+          <div class="col-xl-2 col-md-3 col-6 client-logo">
+            <img src="assets/img/facilities/nabh-friendly.png" class="img-fluid" alt="">
+          </div><!-- End Client Item -->
+
+          <div class="col-xl-2 col-md-3 col-6 client-logo">
+            <img src="assets/img/facilities/hl7-ready.png" class="img-fluid" alt="">
+          </div><!-- End Client Item -->
+
+          <div class="col-xl-2 col-md-3 col-6 client-logo">
+            <img src="assets/img/facilities/icd-10-icd-11.png" class="img-fluid" alt="">
+          </div><!-- End Client Item -->
+
+          <div class="col-xl-2 col-md-3 col-6 client-logo">
+            <img src="assets/img/facilities/abha-abdm.png" class="img-fluid" alt="">
+          </div><!-- End Client Item -->
+
+          <div class="col-xl-2 col-md-3 col-6 client-logo">
+            <img src="assets/img/facilities/biometric.png" class="img-fluid" alt="">
+          </div><!-- End Client Item -->
+
+          <div class="col-xl-2 col-md-3 col-6 client-logo">
+            <img src="assets/img/facilities/tele-consultation.png" class="img-fluid" alt="">
+          </div><!-- End Client Item -->
+
+        </div>
+
+      </div>
+
+    </section><!-- /facilities Section -->
+
+    <!-- About Section -->
+    <section id="about" class="about section light-background">
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <div class="row align-items-xl-center gy-5">
+
+          <div class="col-xl-5 content">
+            <h3>About Us</h3>
+            <h2>Tuning Health Care</h2>
+            <p>Hostune Labs Pvt. Ltd. is a young, dynamic information technology company founded in 2021, driven by professionals with 50+ years of combined experience in healthcare software development. Focusing on creating harmonious connections between people and devices in healthcare institutions, Hostune enables swift, error-free information flow that significantly improves patient care efficiency.</p>
+            <!-- <a href="#" class="read-more"><span>Read More</span><i class="bi bi-arrow-right"></i></a> -->
+          </div>
+
+          <div class="col-xl-7">
+            <div class="row gy-4 icon-boxes">
+
+              <div class="col-md-6" data-aos="fade-up" data-aos-delay="200">
+                <div class="icon-box">
+                  <i class="bi bi-window-stack"></i>
+                  <h3>Intuitive Design</h3>
+                  <p>Every user interaction is thoughtfully crafted for maximum efficiency</p>
+                </div>
+              </div> <!-- End Icon Box -->
+
+              <div class="col-md-6" data-aos="fade-up" data-aos-delay="300">
+                <div class="icon-box">
+                  <i class="bi bi-clipboard-pulse"></i>
+                  <h3>Standardizations</h3>
+                  <p>Complaints as per NABH and other standardizations.</p>
+                </div>
+              </div> <!-- End Icon Box -->
+
+              <div class="col-md-6" data-aos="fade-up" data-aos-delay="400">
+                <div class="icon-box">
+                  <i class="bi bi-shield-check"></i>
+                  <h3>Proven Reliability</h3>
+                  <p>Trusted by 100+ healthcare facilities across India within a shot time</p>
+                </div>
+              </div> <!-- End Icon Box -->
+
+              <div class="col-md-6" data-aos="fade-up" data-aos-delay="500">
+                <div class="icon-box">
+                  <i class="bi bi-person-check"></i>
+                  <h3>Expert Driven Development</h3>
+                  <p>Built with direct input from healthcare professionals</p>
+                </div>
+              </div> <!-- End Icon Box -->
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </section><!-- /About Section -->
+
+    <!-- Stats Section -->
+    <section id="stats" class="stats section dark-background">
+
+      <img src="assets/img/stats-bg.jpg" alt="" data-aos="fade-in">
+
+      <div class="container position-relative" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="row gy-4">
+
+          <div class="col-lg-3 col-md-6">
+            <div class="stats-item text-center w-100 h-100">
+              <span data-purecounter-start="0" data-purecounter-end="100" data-purecounter-duration="1" class="purecounter"></span>
+              <p>Satisfied Clients</p>
+            </div>
+          </div><!-- End Stats Item -->
+
+          <div class="col-lg-3 col-md-6">
+            <div class="stats-item text-center w-100 h-100">
+              <span data-purecounter-start="0" data-purecounter-end="52" data-purecounter-duration="1" class="purecounter"></span>
+              <p>Integrated Modules</p>
+            </div>
+          </div><!-- End Stats Item -->
+
+          <div class="col-lg-3 col-md-6">
+            <div class="stats-item text-center w-100 h-100">
+              <span data-purecounter-start="0" data-purecounter-end="4800" data-purecounter-duration="1" class="purecounter"></span>
+              <p>Hours Of Onsite Support</p>
+            </div>
+          </div><!-- End Stats Item -->
+
+          <div class="col-lg-3 col-md-6">
+            <div class="stats-item text-center w-100 h-100">
+              <span data-purecounter-start="0" data-purecounter-end="180" data-purecounter-duration="1" class="purecounter"></span>
+              <p>Machines Integrated</p>
+            </div>
+          </div><!-- End Stats Item -->
+
+        </div>
+
+      </div>
+
+    </section><!-- /Stats Section -->
+
+    
+
+    <!-- Solutions Section -->
+    <section id="solutions" class="solutions section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Solutions</h2>
+        <p>Comprehensive Healthcare Technology Solutions Powering Patient Care from Registration to Recovery</p>
+      </div><!-- End Section Title -->
+
+      <div class="container">
+
+        <div class="row gy-4">
+
+          <div class="col-lg-6 " data-aos="fade-up" data-aos-delay="100">
+            <div class="solution-item d-flex">
+              <div class="icon flex-shrink-0"><i class="bi bi-hospital"></i></div>
+              <div>
+                <h4 class="title"><a href="solutions-details.html" class="stretched-link">Tune HIS</a></h4>
+                <p class="description">Comprehensive hospital management system designed to streamline operations across departments</p>
+              </div>
+            </div>
+          </div>
+          <!-- End Solution Item -->
+
+          <div class="col-lg-6 " data-aos="fade-up" data-aos-delay="200">
+            <div class="solution-item d-flex">
+              <div class="icon flex-shrink-0"><i class="bi bi-lungs"></i></div>
+              <div>
+                <h4 class="title"><a href="solutions-details.html" class="stretched-link">Diagnostic Suite</a></h4>
+                <p class="description">Integrated laboratory and imaging solution with comprehensive device connectivity</p>
+              </div>
+            </div>
+          </div><!-- End Solution Item -->
+
+          <div class="col-lg-6 " data-aos="fade-up" data-aos-delay="300">
+            <div class="solution-item d-flex">
+              <div class="icon flex-shrink-0"><i class="bi bi-heart-pulse"></i></div>
+              <div>
+                <h4 class="title"><a href="solutions-details.html" class="stretched-link">Clinical Workspace</a></h4>
+                <p class="description">AI-enhanced EMR system with specialized tools for various clinical scenarios</p>
+              </div>
+            </div>
+          </div><!-- End Solution Item -->
+
+          <div class="col-lg-6 " data-aos="fade-up" data-aos-delay="400">
+            <div class="solution-item d-flex">
+              <div class="icon flex-shrink-0"><i class="bi bi-prescription"></i></div>
+              <div>
+                <h4 class="title"><a href="solutions-details.html" class="stretched-link">Pharmacy Suite</a></h4>
+                <p class="description">End-to-end medication and inventory management with intelligent forecasting</p>
+              </div>
+            </div>
+          </div><!-- End Solution Item -->
+
+          <div class="col-lg-6 " data-aos="fade-up" data-aos-delay="500">
+            <div class="solution-item d-flex">
+              <div class="icon flex-shrink-0"><i class="bi bi-bar-chart-line"></i></div>
+              <div>
+                <h4 class="title"><a href="solutions-details.html" class="stretched-link">Analytics Platform</a></h4>
+                <p class="description">Data-driven decision support system with customizable dashboards and reports</p>
+              </div>
+            </div>
+          </div><!-- End Solution Item -->
+
+          <div class="col-lg-6 " data-aos="fade-up" data-aos-delay="600">
+            <div class="solution-item d-flex">
+              <div class="icon flex-shrink-0"><i class="bi bi-cash-stack"></i></div>
+              <div>
+                <h4 class="title"><a href="solutions-details.html" class="stretched-link">Enterprise Management</a></h4>
+                <p class="description">Integrated financial, human resources, and administrative solutions for healthcare</p>
+              </div>
+            </div>
+          </div><!-- End Solution Item -->
+
+          <div class="col-lg-6 " data-aos="fade-up" data-aos-delay="700">
+            <div class="solution-item d-flex">
+              <div class="icon flex-shrink-0"><i class="bi bi-motherboard"></i></div>
+              <div>
+                <h4 class="title"><a href="solutions-details.html" class="stretched-link">Integration Engine</a></h4>
+                <p class="description">A powerful connectivity platform that links clinical devices such as laboratory machines, vital sign monitoring devices, digital imaging systems like PACS, as well as external systems and services.</p>
+              </div>
+            </div>
+          </div><!-- End Solution Item -->
+
+          <div class="col-lg-6 " data-aos="fade-up" data-aos-delay="800">
+            <div class="solution-item d-flex">
+              <div class="icon flex-shrink-0"><i class="bi bi-phone"></i></div>
+              <div>
+                <h4 class="title"><a href="solutions-details.html" class="stretched-link">Digital Engagement</a></h4>
+                <p class="description">Mobile and cloud solutions extending care beyond facility walls</p>
+              </div>
+            </div>
+          </div><!-- End Solution Item -->          
+
+        </div>
+
+      </div>
+
+    </section><!-- /Solutions Section -->
+
+
+
+    <!-- Portfolio Section -->
+    <section id="products" class="portfolio section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Our Products</h2>
+        <p>Explore our cutting-edge solutions designed to transform healthcare operations, streamline workflows, and enhance patient care across hospitals, laboratories, pharmacies, and beyond.</p>
+      </div><!-- End Section Title -->
+
+      <div class="container">
+
+        <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
+
+          <ul class="portfolio-filters isotope-filters" data-aos="fade-up" data-aos-delay="100">
+            <li data-filter="*" class="filter-active">All</li>
+            <li data-filter=".filter-app">Mobile</li>
+            <li data-filter=".filter-product">Desktop</li>
+            <li data-filter=".filter-branding">Web</li>
+          </ul><!-- End Portfolio Filters -->
+
+          <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
+
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
+              <img src="assets/img/tune-his-portfolio/tune-his-1.jpg" class="img-fluid" alt="">
+              <div class="portfolio-info">
+                <h4>Tune HIS</h4>
+                <p>Mobile Application Services</p>
+                <a href="assets/img/tune-his-portfolio/tune-his-1.jpg" title="App 1" data-gallery="portfolio-gallery-app" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+              </div>
+            </div><!-- End Portfolio Item -->
+
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-product">
+              <img src="assets/img/tune-his-portfolio/tune-his-2.jpg" class="img-fluid" alt="">
+              <div class="portfolio-info">
+                <h4>TuneHIS</h4>
+                <p>Various comprehensive analysis Reports</p>
+                <a href="assets/img/tune-his-portfolio/tune-his-2.jpg" title="Product 1" data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+              </div>
+            </div><!-- End Portfolio Item -->
+
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-branding">
+              <img src="assets/img/tune-his-portfolio/tune-his-3.jpg" class="img-fluid" alt="">
+              <div class="portfolio-info">
+                <h4>TuneHIS</h4>
+                <p>Simplified Dashboard gets all notifications</p>
+                <a href="assets/img/tune-his-portfolio/tune-his-3.jpg" title="Branding 1" data-gallery="portfolio-gallery-branding" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+              </div>
+            </div><!-- End Portfolio Item -->
+
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
+              <img src="assets/img/tune-his-portfolio/tune-his-4.jpg" class="img-fluid" alt="">
+              <div class="portfolio-info">
+                <h4>TuneHIS</h4>
+                <p>Mobile Applications for all Hospital Needs</p>
+                <a href="assets/img/tune-his-portfolio/tune-his-4.jpg" title="App 2" data-gallery="portfolio-gallery-app" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+              </div>
+            </div><!-- End Portfolio Item -->
+
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-product">
+              <img src="assets/img/tune-his-portfolio/tune-his-5.jpg" class="img-fluid" alt="">
+              <div class="portfolio-info">
+                <h4>TuneHIS</h4>
+                <p>Apps are kiosk friendly</p>
+                <a href="assets/img/tune-his-portfolio/tune-his-5.jpg" title="Product 2" data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+              </div>
+            </div><!-- End Portfolio Item -->
+
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-branding">
+              <img src="assets/img/tune-his-portfolio/tune-his-6.jpg" class="img-fluid" alt="">
+              <div class="portfolio-info">
+                <h4>TuneHIS</h4>
+                <p>Integration with variety of specialities</p>
+                <a href="assets/img/tune-his-portfolio/tune-his-6.jpg" title="Branding 2" data-gallery="portfolio-gallery-branding" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+              </div>
+            </div><!-- End Portfolio Item -->
+
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
+              <img src="assets/img/tune-his-portfolio/tune-his-7.jpg" class="img-fluid" alt="">
+              <div class="portfolio-info">
+                <h4>TuneHIS</h4>
+                <p>Medications simplified through Doctune Doctor's App</p>
+                <a href="assets/img/tune-his-portfolio/tune-his-7.jpg" title="App 3" data-gallery="portfolio-gallery-app" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+              </div>
+            </div><!-- End Portfolio Item -->
+
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-product">
+              <img src="assets/img/tune-his-portfolio/tune-his-8.jpg" class="img-fluid" alt="">
+              <div class="portfolio-info">
+                <h4>TuneHIS</h4>
+                <p>Extreme friendly menus - start use without training.</p>
+                <a href="assets/img/tune-his-portfolio/tune-his-8.jpg" title="Product 3" data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+              </div>
+            </div><!-- End Portfolio Item -->
+
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-branding">
+              <img src="assets/img/tune-his-portfolio/tune-his-9.jpg" class="img-fluid" alt="">
+              <div class="portfolio-info">
+                <h4>TuneHIS</h4>
+                <p>Cloud friendly - access any where any time</p>
+                <a href="assets/img/tune-his-portfolio/tune-his-9.jpg" title="Branding 2" data-gallery="portfolio-gallery-branding" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+              </div>
+            </div><!-- End Portfolio Item -->
+
+          </div><!-- End Portfolio Container -->
+
+        </div>
+
+      </div>
+
+    </section><!-- /Portfolio Section -->
+
+
+
+    <!-- Faq Section -->
+    <section id="faq" class="faq section">
+
+      <div class="container">
+
+        <div class="row gy-4">
+
+          <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+            <div class="content px-xl-5">
+              <h3><span>Frequently Asked </span><strong>Questions</strong></h3>
+
+            </div>
+          </div>
+
+          <div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
+
+            <div class="faq-container">
+              <div class="faq-item faq-active">
+                <h3><span class="num">1.</span> <span>Does Hostune support multi-location healthcare facilities?</span></h3>
+                <div class="faq-content">
+                  <p>Yes, Hostune's solutions are designed for multi-location support, allowing centralized data management and real-time monitoring across all facilities to ensure consistent service delivery.</p>
+                </div>
+                <i class="faq-toggle bi bi-chevron-right"></i>
+              </div><!-- End Faq item-->
+
+              <div class="faq-item">
+                <h3><span class="num">2.</span> <span>How secure is the data managed by Hostune's systems?</span></h3>
+                <div class="faq-content">
+                  <p>Hostune ensures robust security with encrypted communications, role-based access control, audit trails, and compliance with healthcare regulations like NABH standards to protect sensitive patient information.</p>
+                </div>
+                <i class="faq-toggle bi bi-chevron-right"></i>
+              </div><!-- End Faq item-->
+
+              <div class="faq-item">
+                <h3><span class="num">3.</span> <span>Can Hostune integrate with existing medical devices and systems?</span></h3>
+                <div class="faq-content">
+                  <p>Absolutely! Hostune supports bi-directional integration with laboratory equipment, imaging systems, and external services using HL7 and ASTM protocols for seamless interoperability.</p>
+                </div>
+                <i class="faq-toggle bi bi-chevron-right"></i>
+              </div><!-- End Faq item-->
+
+              <div class="faq-item">
+                <h3><span class="num">4.</span> <span>What types of hospitals can benefit from Tune HIS? </span></h3>
+                <div class="faq-content">
+                  <p>Tune HIS is a comprehensive Hospital Management System suitable for a wide range of healthcare providers, from single doctor clinics to multi and super specialty hospitals, as well as medical colleges</p>
+                </div>
+                <i class="faq-toggle bi bi-chevron-right"></i>
+              </div><!-- End Faq item-->
+
+              <div class="faq-item">
+                <h3><span class="num">5.</span> <span>What kind of training and support is provided for Tune HIS users? </span></h3>
+                <div class="faq-content">
+                  <p>Hostune offers quick and consistent chat-based support. Their intuitive user interfaces are also designed to reduce the time spent on devices, helping users to focus on patient care.</p>
+                </div>
+                <i class="faq-toggle bi bi-chevron-right"></i>
+              </div><!-- End Faq item-->
+
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </section><!-- /Faq Section -->
+
+
+    <!-- Clients Section -->
+    <section id="clients" class="clients section">
+
+      <div class="container" data-aos="fade-up">
+
+        <div class="row gy-4">
+
+          <div class="col-xl-2 col-md-3 col-6 client-logo">
+            <img src="assets/img/clients/client-1.png" class="img-fluid" alt="">
+          </div><!-- End Client Item -->
+
+          <div class="col-xl-2 col-md-3 col-6 client-logo">
+            <img src="assets/img/clients/client-2.png" class="img-fluid" alt="">
+          </div><!-- End Client Item -->
+
+          <div class="col-xl-2 col-md-3 col-6 client-logo">
+            <img src="assets/img/clients/client-3.png" class="img-fluid" alt="">
+          </div><!-- End Client Item -->
+
+          <div class="col-xl-2 col-md-3 col-6 client-logo">
+            <img src="assets/img/clients/client-4.png" class="img-fluid" alt="">
+          </div><!-- End Client Item -->
+
+          <div class="col-xl-2 col-md-3 col-6 client-logo">
+            <img src="assets/img/clients/client-5.png" class="img-fluid" alt="">
+          </div><!-- End Client Item -->
+
+          <div class="col-xl-2 col-md-3 col-6 client-logo">
+            <img src="assets/img/clients/client-6.png" class="img-fluid" alt="">
+          </div><!-- End Client Item -->
+
+        </div>
+
+      </div>
+
+    </section><!-- /Clients Section -->
+
+
+
+    <!-- Call To Action Section -->
+    <section id="call-to-action" class="call-to-action section dark-background">
+
+      <img src="assets/img/cta-bg.jpg" alt="">
+
+      <div class="container">
+        <div class="row justify-content-center" data-aos="zoom-in" data-aos-delay="100">
+          <div class="col-xl-10">
+            <div class="text-center">
+              <h3>Book A Demo</h3>
+              <p>Ready to transform your hospital's efficiency and patient care? Request a personalized demo of Tune HIS today!</p>
+              <a class="cta-btn" href="#contact">Contact Us</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section><!-- /Call To Action Section -->
+
+    <!-- Testimonials Section -->
+  <!--   <section id="testimonials" class="testimonials section light-background">
+
+      <div class="container">
+
+        <div class="row align-items-center">
+
+          <div class="col-lg-5 info" data-aos="fade-up" data-aos-delay="100">
+            <h3>Testimonials</h3>
+            <p>
+              Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+              velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.
+            </p>
+          </div>
+
+          <div class="col-lg-7" data-aos="fade-up" data-aos-delay="200">
+
+            <div class="swiper init-swiper">
+              <script type="application/json" class="swiper-config">
+                {
+                  "loop": true,
+                  "speed": 600,
+                  "autoplay": {
+                    "delay": 5000
+                  },
+                  "slidesPerView": "auto",
+                  "pagination": {
+                    "el": ".swiper-pagination",
+                    "type": "bullets",
+                    "clickable": true
+                  }
+                }
+              </script>
+              <div class="swiper-wrapper">
+
+                <div class="swiper-slide">
+                  <div class="testimonial-item">
+                    <div class="d-flex">
+                      <img src="assets/img/testimonials/testimonials-1.jpg" class="testimonial-img flex-shrink-0" alt="">
+                      <div>
+                        <h3>Saul Goodman</h3>
+                        <h4>Ceo &amp; Founder</h4>
+                        <div class="stars">
+                          <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                        </div>
+                      </div>
+                    </div>
+                    <p>
+                      <i class="bi bi-quote quote-icon-left"></i>
+                      <span>Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.</span>
+                      <i class="bi bi-quote quote-icon-right"></i>
+                    </p>
+                  </div>
+                </div> --><!-- End testimonial item -->
+
+                <!-- <div class="swiper-slide">
+                  <div class="testimonial-item">
+                    <div class="d-flex">
+                      <img src="assets/img/testimonials/testimonials-2.jpg" class="testimonial-img flex-shrink-0" alt="">
+                      <div>
+                        <h3>Sara Wilsson</h3>
+                        <h4>Designer</h4>
+                        <div class="stars">
+                          <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                        </div>
+                      </div>
+                    </div>
+                    <p>
+                      <i class="bi bi-quote quote-icon-left"></i>
+                      <span>Export tempor illum tamen malis malis eram quae irure esse labore quem cillum quid cillum eram malis quorum velit fore eram velit sunt aliqua noster fugiat irure amet legam anim culpa.</span>
+                      <i class="bi bi-quote quote-icon-right"></i>
+                    </p>
+                  </div>
+                </div> --><!-- End testimonial item -->
+
+                <!-- <div class="swiper-slide">
+                  <div class="testimonial-item">
+                    <div class="d-flex">
+                      <img src="assets/img/testimonials/testimonials-3.jpg" class="testimonial-img flex-shrink-0" alt="">
+                      <div>
+                        <h3>Jena Karlis</h3>
+                        <h4>Store Owner</h4>
+                        <div class="stars">
+                          <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                        </div>
+                      </div>
+                    </div>
+                    <p>
+                      <i class="bi bi-quote quote-icon-left"></i>
+                      <span>Enim nisi quem export duis labore cillum quae magna enim sint quorum nulla quem veniam duis minim tempor labore quem eram duis noster aute amet eram fore quis sint minim.</span>
+                      <i class="bi bi-quote quote-icon-right"></i>
+                    </p>
+                  </div>
+                </div> --><!-- End testimonial item -->
+
+               <!--  <div class="swiper-slide">
+                  <div class="testimonial-item">
+                    <div class="d-flex">
+                      <img src="assets/img/testimonials/testimonials-4.jpg" class="testimonial-img flex-shrink-0" alt="">
+                      <div>
+                        <h3>Matt Brandon</h3>
+                        <h4>Freelancer</h4>
+                        <div class="stars">
+                          <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                        </div>
+                      </div>
+                    </div>
+                    <p>
+                      <i class="bi bi-quote quote-icon-left"></i>
+                      <span>Fugiat enim eram quae cillum dolore dolor amet nulla culpa multos export minim fugiat minim velit minim dolor enim duis veniam ipsum anim magna sunt elit fore quem dolore labore illum veniam.</span>
+                      <i class="bi bi-quote quote-icon-right"></i>
+                    </p>
+                  </div>
+                </div> --><!-- End testimonial item -->
+
+                <!-- <div class="swiper-slide">
+                  <div class="testimonial-item">
+                    <div class="d-flex">
+                      <img src="assets/img/testimonials/testimonials-5.jpg" class="testimonial-img flex-shrink-0" alt="">
+                      <div>
+                        <h3>John Larson</h3>
+                        <h4>Entrepreneur</h4>
+                        <div class="stars">
+                          <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                        </div>
+                      </div>
+                    </div>
+                    <p>
+                      <i class="bi bi-quote quote-icon-left"></i>
+                      <span>Quis quorum aliqua sint quem legam fore sunt eram irure aliqua veniam tempor noster veniam enim culpa labore duis sunt culpa nulla illum cillum fugiat legam esse veniam culpa fore nisi cillum quid.</span>
+                      <i class="bi bi-quote quote-icon-right"></i>
+                    </p>
+                  </div>
+                </div> --><!-- End testimonial item -->
+
+              <!-- </div>
+              <div class="swiper-pagination"></div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section> --><!-- /Testimonials Section -->
+
+
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Contact</h2>
+        <p>Take the first step towards a smarter hospital. Contact us now to discuss your needs and get started with Hostune!</p>
+      </div><!-- End Section Title -->
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="row gy-4">
+
+          <div class="col-lg-6">
+
+            <div class="row gy-4">
+              <div class="col-md-6">
+                <div class="info-item" data-aos="fade" data-aos-delay="200">
+                  <i class="bi bi-geo-alt"></i>
+                  <h3>Hostune Labs Pvt Ltd</h3>
+                  <p>CIN : U72900KL2021PTC072629</p>
+                  <p>Kochi | Kollam | Palakkad</p>
+                </div>
+              </div><!-- End Info Item -->
+
+              <div class="col-md-6">
+                <div class="info-item" data-aos="fade" data-aos-delay="500">
+                  <i class="bi bi-clock"></i>
+                  <h3>Open Hours</h3>
+                  <p>Monday - Saturday</p>
+                  <p>9:00AM - 05:00PM</p>
+                </div>
+              </div><!-- End Info Item -->
+
+
+              <div class="col-md-6">
+                <div class="info-item" data-aos="fade" data-aos-delay="300">
+                  <i class="bi bi-telephone"></i>
+                  <h3>Call Us</h3>
+                  <p>+91 97 44 55 4567<br />+91 9048 92 7482<br />+91 94466 233 22</p>
+                </div>
+              </div><!-- End Info Item -->
+
+              <div class="col-md-6">
+                <div class="info-item" data-aos="fade" data-aos-delay="400">
+                  <i class="bi bi-envelope"></i>
+                  <h3>Email Us</h3>
+                  <p>info@hostune.in</p>
+                </div>
+              </div><!-- End Info Item -->
+
+
+
+            </div>
+
+          </div>
+
+          <div class="col-lg-6">
+            <form action="https://formspree.io/f/xkgodbqy" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
+              <div class="row gy-4">
+
+                <div class="col-md-6">
+                  <input type="text" name="name" class="form-control" placeholder="Your Name" required="">
+                </div>
+
+                <div class="col-md-6 ">
+                  <input type="email" class="form-control" name="email" placeholder="Your Email" required="">
+                </div>
+
+                <div class="col-12">
+                  <input type="text" class="form-control" name="subject" placeholder="Subject" required="">
+                </div>
+
+                <div class="col-12">
+                  <textarea class="form-control" name="message" rows="6" placeholder="Message" required=""></textarea>
+                </div>
+
+                <div class="col-12 text-center">
+                  <div class="loading">Loading</div>
+                  <div class="error-message"></div>
+                  <div class="sent-message">Your message has been sent. Thank you!</div>
+
+                  <button type="submit">Send Message</button>
+                </div>
+
+              </div>
+            </form>
+          </div><!-- End Contact Form -->
+
+        </div>
+
+      </div>
+
+    </section><!-- /Contact Section -->
+
+  </main>
+
+  <footer id="footer" class="footer position-relative light-background">
+
+    <div class="container footer-top">
+      <div class="row gy-4">
+        <div class="col-lg-5 col-md-12 footer-about">
+          <a href="index.html" class="logo d-flex align-items-center">
+            <span class="sitename">Tune HIS</span>
+          </a>
+          <p>Streamlining operations, reducing costs, and enhancing patient care - experience the difference with the best HMS on the market.</p>
+<!--            <div class="social-links d-flex mt-4">
+            <a href=""><i class="bi bi-twitter-x"></i></a>
+            <a href=""><i class="bi bi-facebook"></i></a>
+            <a href=""><i class="bi bi-instagram"></i></a>
+            <a href=""><i class="bi bi-linkedin"></i></a>
+          </div>  -->
+        </div>
+
+        <div class="col-lg-2 col-6 footer-links">
+          <h4>Useful Links</h4>
+          <ul>
             <li><a href="#">Home</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#features">Features</a></li>
-            <li><a href="download.html">Download</a></li>
-            <li><a href="#contactus">About Us</a></li>
+            <li><a href="solutions-details.html">Solutions</a></li>
+            <li><a href="download.html">Downloads</a></li>
           </ul>
         </div>
-      </nav>
-            
-      <!-- end of Navbar -->
 
+      
 
-      <header class="page-header">
-        
-        <!-- RD Navbar-->
-        <div class="rd-navbar-wrap position-relative">
-          <nav class="rd-navbar" data-layout="rd-navbar-sidebar" data-device-layout="rd-navbar-sidebar" data-sm-layout="rd-navbar-sidebar" data-sm-device-layout="rd-navbar-sidebar" data-md-layout="rd-navbar-sidebar" data-md-device-layout="rd-navbar-sidebar" data-lg-layout="rd-navbar-sidebar" data-lg-device-layout="rd-navbar-sidebar" data-xl-layout="rd-navbar-sidebar" data-xl-device-layout="rd-navbar-sidebar" data-xxl-layout="rd-navbar-sidebar" data-xxl-device-layout="rd-navbar-sidebar" data-lg-stick-up-offset="46px" data-xl-stick-up-offset="46px" data-xxl-stick-up-offset="46px" data-lg-stick-up="true" data-xl-stick-up="true" data-xxl-stick-up="true" data-auto-height="false" data-sm-auto-height="false" data-md-auto-height="false" data-lg-auto-height="false" data-xl-auto-height="false" data-xxl-auto-height="false">
-            <div class="rd-navbar-main-outer">
-              <div class="rd-navbar-main">
-                <!-- RD Navbar Panel-->
-                <div class="rd-navbar-panel">
-                  <!-- RD Navbar Toggle-->
-                  <!-- <button class="rd-navbar-toggle" data-rd-navbar-toggle=".rd-navbar-nav-wrap"><span></span></button> -->
-                  <!-- RD Navbar Brand-->
-				  <br>
-                  <div class="rd-navbar-brand"><a class="brand" href="index.html"><img class="brand-logo-desktop" src="images/logo-def-384X130.png" alt="" width="192" height="94"/><img class="brand-logo-mobile" src="images/logo-def-384X130.png" alt="" width="192" height="65"/></a>
-                  </div>
-                </div>
-                <!-- <div class="modal-dialog">
-                  <div class="modal-content">
-                  Sales : 
-                  </div>
-                </div> -->
-                  
-				<!-- 
-                <div class="rd-navbar-nav-wrap">
-                  <div class="rd-navbar-nav-container">
-                    // RD Navbar Nav
-                    <ul class="rd-navbar-nav">
-                      <li class="rd-nav-item active"><a class="rd-nav-link" href="index.html">HosTune Labs</a>
-                      </li>
-					  <li class="rd-nav-item"><a class="rd-nav-link" href="#">HMS</a>
-                      </li>
-					  <li class="rd-nav-item"><a class="rd-nav-link" href="#">EMR</a>
-                      </li>
-					  <li class="rd-nav-item"><a class="rd-nav-link" href="#">LIS</a>
-                      </li>
-                      <li class="rd-nav-item"><a class="rd-nav-link" href="#">MIS</a>
-                      </li>
-                      <li class="rd-nav-item"><a class="rd-nav-link" href="#">PACS</a>
-                      </li>
-					  <li class="rd-nav-item"><a class="rd-nav-link" href="#">TELE MEDICINE</a>
-                      </li>
-                    </ul>
-                    <ul class="contacts-classic">
-                      <li>
-                        <div class="contacts-classic-title">Phone:</div><a href="tel:#">+1 (409) 987–5874</a>
-                      </li>
-                      <li>
-                        <div class="contacts-classic-title">E-mail:</div><a href="mailTo:#">info@demolink.org</a>
-                      </li> 
-                      <li>
-                        <div class="contacts-classic-title">Follow Us:</div>
-                        <ul class="list-inline list-social list-inline-sm">
-                          <li><a class="icon fa fa-linkedin" href="#"></a></li>
-                          <li><a class="icon fa fa-twitter" href="#"></a></li>
-                          <li><a class="icon fa fa-facebook" href="#"></a></li>
-                          <li><a class="icon fa fa-instagram" href="#"></a></li>
-                        </ul>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-				 -->
-              </div>
-            </div>
-            <ul class="nav-custom rd-navbar-nav">
-              <li class="active"><a class="nav-custom-counter" href="#home"></a></li>
-              <li><a class="nav-custom-counter" href="#about"></a></li>
-              <li><a class="nav-custom-counter" href="#works"></a></li>
-              <li><a class="nav-custom-counter" href="#projects"></a></li>
-              <li><a class="nav-custom-counter" href="#contacts"></a></li>
-            </ul>
-          </nav>
+        <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
+          <h4>Contact Us</h4>
+          <p>Hostune Labs Pvt Ltd</p>
+          <p><strong>Phone:</strong> <span><a href="tel:+919744554567"><b>+91 97 44 55 4567</b></a></span></p>
+          <p><strong>Email:</strong> <span><a href="mailto:info@hostune.in">info@hostune.in</a></span></p>
+          <p><strong>WhatsApp:</strong> <span><a target="_blank" href="https://wa.me/917356142434">+91 7356 14 24 34</a></span></p>
         </div>
-      </header>
-      <!-- DePaletra-->
-      <section class="section section-full section-inset-1 bg-default text-center bg-image background-position-1" id="home" style="background-image: url(images/bg-main.jpg)">
-        <div class="container">
-          <div class="title-style-1-wrap">
-            <div class="oh-desktop wow slideInLeft">
-              <h1 class="title-style-1 wow slideInRight">Hostune</h1>
-            </div>
-          </div>
-          <div class="title-style-2-wrap">
-            <div class="oh-desktop wow slideInRight">
-              <h5 class="title-style-2 wow slideInLeft">Tuning the world of Health Care</h5>
-            </div>
-          </div>
-          <div class="title-style-2-wrap">
-          <div class="oh-desktop wow slideInRight">
-          <h3 class="title-style-3">HMS | EMR | LIS | PACS | MIS </h3>
-          </div>
-          </div>
-		  
-		  <div class="title-style-2-wrap">
-            <div class="oh-desktop wow slideInRight">
-              <h5 class="title-style-1 wow slideInLeft">India's first HIS/HMS integrated with WHO's ICD 11</h5>
-            </div>
-          </div>
-		  
-        </div>
-      </section>
-      <!-- About Us-->
-      <section class="section section-full section-xxl bg-default" id="services">
-        <div class="container">
-          <div class="row row-30 justify-content-center">
-            <div class="col-sm-9 col-md-5 cube-classic-wrap">
-              <div class="subtitle-classic wow fadeInLeft">Welcome to Hostune Labs</div>
-              <h2 class="wow fadeInLeft">Our creativity will <br class="d-none d-md-block"><span class="text-primary">Tune </span> Health Care <br class="d-none d-md-block">in a remarkable way
-              </h2>
-              <div class="cube-classic cube-classic-1"><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span>
-              </div>
-            </div>
-            <div class="col-md-7 col-lg-6 col-xl-5">
-              <p class="wow fadeInRight">Hostune Labs is a creative health care services provider founded in 2021. We specialize in creating applications to support Hospitals and Health Care Industry. Our team works flawlessly and timely to create applications
-			  in a time that meets your deadlines and preferences.</p> 
-              <p class="wow fadeInRight">We are a team of top IT Professionals with years of experience in IT Industry, Health Care and Hospital Management System Development who strive for creative products that attract the attention of your potential customers and folks.</p><a class="wow fadeInRight button button-default" href="#">More about us</a>
-            </div>
-          </div>
-        </div>
-      </section>
-      <!-- Selected works-->
-      <section class="section section-full section-md bg-gray-100 section-background-custom" id="works">
-        <div class="container">
-          <div class="row row-30 justify-content-center justify-content-lg-end align-items-md-center">
-            <div class="col-sm-8 col-md-6 col-lg-5 cube-classic-wrap">
-              <div class="subtitle-classic wow fadeInLeft">What we Do!</div>
-              <h2 class="wow fadeInLeft" data-wow-delay=".1s">Checkout our <br class="d-none d-md-block">World Class<br class="d-none d-md-block">features
-              </h2>
-              <p class="wow fadeInLeft">Our team works on a wide variety of Health Care Supporting Products every day. We deliver quality solutions for your bussiness based on our boundless creativity and your needs.</p>
-              <div class="cube-classic cube-classic-2"><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span>
-              </div>
-            </div>
-            <div class="col-sm-8 col-md-6 wow blurIn">
-              <div class="inset-xl-left-25">
-                <!-- Owl Carousel-->
-                <div class="owl-carousel owl-style-1" data-loop="true" data-items="1" data-nav="true"><img src="images/index-1-618x614.jpg" alt="" width="618" height="614"/><img src="images/index-2-618x614.jpg" alt="" width="618" height="614"/><img src="images/index-3-618x614.jpg" alt="" width="618" height="614"/>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="background-custom-1 bg-default"></div>
-      </section>
-      <!-- Portfolio-->
-      <section class="section section-full section-xl bg-default text-md-center" id="features">
-        <div class="container">
-          <div class="subtitle-classic wow fadeInUp">Portfolio</div>
-          <h2><span class="d-inline-block wow fadeInLeft">Our featured</span> <span class="text-primary d-inline-block wow fadeInRight">Services</span>
-          </h2>
-          <div class="row row-lg row-30">
-            <div class="col-sm-6 col-md-4 wow blurIn" data-wow-delay=".2s">
-              <article class="project-classic box-md"><img src="images/project-1-370x262.jpg" alt="" width="370" height="262"/>
-                <div class="project-classic-caption">
-                  <div>
-                    <h4 class="project-classic-title"><a href="#">HMS</a></h4>
-                    <div class="project-classic-tag">Hospital Management System</div>
-                  </div>
-                </div>
-              </article>
-            </div>
-            <div class="col-sm-6 col-md-4 wow blurIn" data-wow-delay=".1s">
-              <article class="project-classic box-md"><img src="images/project-2-370x262.jpg" alt="" width="370" height="262"/>
-                <div class="project-classic-caption">
-                  <div>
-                    <h4 class="project-classic-title"><a href="#">EMR</a></h4>
-                    <div class="project-classic-tag">Electronic Medical Records</div>
-                  </div>
-                </div>
-              </article>
-            </div>
-            <div class="col-sm-6 col-md-4 wow blurIn">
-              <article class="project-classic box-md"><img src="images/project-3-370x262.jpg" alt="" width="370" height="262"/>
-                <div class="project-classic-caption">
-                  <div>
-                    <h4 class="project-classic-title"><a href="#">LIS</a></h4>
-                    <div class="project-classic-tag">Laboratory Information System</div>
-                  </div>
-                </div>
-              </article>
-            </div>
-            <div class="col-sm-6 col-md-4 wow blurIn">
-              <article class="project-classic box-md"><img src="images/project-4-370x262.jpg" alt="" width="370" height="262"/>
-                <div class="project-classic-caption">
-                  <div>
-                    <h4 class="project-classic-title"><a href="#">MIS</a></h4>
-                    <div class="project-classic-tag">Management Information System</div>
-                  </div>
-                </div>
-              </article>
-            </div>
-            <div class="col-sm-6 col-md-4 wow blurIn" data-wow-delay=".1s">
-              <article class="project-classic box-md"><img src="images/project-5-370x262.jpg" alt="" width="370" height="262"/>
-                <div class="project-classic-caption">
-                  <div>
-                    <h4 class="project-classic-title"><a href="#">PACS</a></h4>
-                    <div class="project-classic-tag">Integrations with Imaging Devices </div>
-                  </div>
-                </div>
-              </article>
-            </div>
-            <div class="col-sm-6 col-md-4 wow blurIn" data-wow-delay=".2s">
-              <article class="project-classic box-md"><img src="images/project-6-370x262.jpg" alt="" width="370" height="262"/>
-                <div class="project-classic-caption">
-                  <div>
-                    <h4 class="project-classic-title"><a href="#">Tele Medicine</a></h4>
-                    <div class="project-classic-tag">Online Consultation & More</div>
-                  </div>
-                </div>
-              </article>
-            </div>
-          </div>
-        </div>
-       </section><!--<a class="section section-banner" href="https://www.templatemonster.com/intense-multipurpose-html-template.html" style="background-image: url(images/banner/background-03-1920x310.jpg); background-image: -webkit-image-set( url(images/banner/background-03-1920x310.jpg) 1x, url(images/banner/background-03-3840x620.jpg) 2x )" target="_blank"><img src="images/banner/foreground-03-1600x310.png" srcset="images/banner/foreground-03-1600x310.png 1x, images/banner/foreground-03-3200x620.png 2x" alt="" width="1600" height="310"></a> -->
-      <!-- Page Footer-->
-      <footer class="section footer-classic section-full section-full-1 section-sm section-inset-2 bg-gray-3 context-dark text-md-center" id="contacts">
-        <div class="container">
-          
-          <h2><span class="d-inline-block wow fadeInLeft">Share your queries to </span> <span class="d-inline-block wow fadeInRight">Hostune Labs</span>
-          </h2>
-          <!-- RD Mailform-->
-          <form class="rd-form rd-mailform" data-form-output="form-output-global" data-form-type="contact" method="post" action="bat/rd-mailform.php">
-            <div class="form-wrap wow fadeInRight">
-              <label class="form-label" for="contact-name">Name</label>
-              <input class="form-input" id="contact-name" type="text" name="name" data-constraints="@Required">
-            </div>
-            <div class="form-wrap wow fadeInRight">
-              <label class="form-label" for="contact-email">E-Mail</label>
-              <input class="form-input" id="contact-email" type="email" name="email" data-constraints="@Required @Email">
-            </div>
-            <div class="form-wrap wow fadeInRight">
-              <label class="form-label" for="contact-message">Message</label>
-              <textarea class="form-input" id="contact-message" name="message" data-constraints="@Required"></textarea>
-            </div>
-            <div class="form-button text-center">
-              <button class="button button-default wow fadeInUp" type="submit">Send message</button>
-            </div>
-          </form>
-        </div>
-        <div class="container" id="contactus">
-          <div class="d-inline-block wow fadeInUp">HOSTUNE LABS PRIVATE LIMITED <br>CIN: U72900KL2021PTC072629 <br> Kerala, India<br>Contact Sales : 9744554567 | 9446623322 | 9048927482 
-                  <br> Email : info@hostune.in  </div>
-          <div class="footer-classic-list-social wow fadeInUp">
-            <ul class="list-inline list-social list-inline-sm">
-              <li><a class="icon fa fa-linkedin" href="#"></a></li>
-              <li><a class="icon fa fa-twitter" href="#"></a></li>
-              <li><a class="icon fa fa-facebook" href="#"></a></li>
-              <li><a class="icon fa fa-instagram" href="#"></a></li>
-            </ul>
-          </div>
-          <p class="rights wow fadeInUp"><span>&copy;&nbsp; </span><span class="copyright-year"></span><span>&nbsp;</span><span> Hostune Labs Pvt Ltd </span><span>.&nbsp;</span><span>All rights reserved.</span><br/>Design&nbsp;by&nbsp;<a href="#">Team Hostune Labs</a></p>
-        </div>
-      </footer>
+
+      </div>
     </div>
-    <div class="snackbars" id="form-output-global"></div>
-    <script src="js/core.min.js"></script>
-    <script src="js/script.js"></script>
-  </body>
+
+    <div class="container copyright text-center mt-4">
+      <p>© <span>Copyright</span> <strong class="sitename">Hostune</strong> <span>All Rights Reserved</span></p>
+      <div class="credits">
+  
+        Designed by <a href="https://hostune.in/">Hostune</a>
+      </div>
+    </div>
+
+  </footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="assets/vendor/php-email-form/validate.js"></script> -->
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Main JS File -->
+  <script src="assets/js/main.js"></script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org/",
+      "@type": "SoftwareApplication",
+      "name": "Best Hospital Management System",
+      "operatingSystem": ["Windows", "Cloud-based", "Android"],
+      "applicationCategory": "BusinessApplication",
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "INR",
+        "price": "Contact for pricing"
+      }
+    }
+    </script>
+</body>
+
 </html>
