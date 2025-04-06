@@ -2853,3 +2853,26 @@ section,
   color: color-mix(in srgb, var(--default-color), transparent 60%);
   font-size: 14px;
 }
+
+
+
+/* Added extra for sales enquiry */
+
+.sales-enquiry-bar {
+  background-color: #f8f9fa;
+  padding: 8px 0;
+  font-size: 14px;
+}
+
+.sales-enquiry-bar a {
+  text-decoration: none;
+  color: #333;
+}
+
+.sales-enquiry-bar a:hover {
+  color: #0d6efd;
+}
+
+.sales-text {
+  font-weight: 600;
+}
