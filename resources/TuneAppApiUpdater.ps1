@@ -22,7 +22,7 @@ if (-NOT ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
 }
 Write-Host "Administrator check passed."
 
-# 2. Check for and import the WebAdministration module
+# 2. Check for and import the WebAdministration module for IIS control
 Write-Host "Checking for WebAdministration module..."
 if (-NOT (Get-Module -ListAvailable -Name WebAdministration)) {
     Write-Error "The WebAdministration module is required. Please install 'IIS Management Scripts and Tools' via 'Turn Windows features on or off'."
@@ -74,13 +74,13 @@ try {
     $backupFolderName = "Copy of $sourceFolderName"
     $backupPath = Join-Path -Path $parentDir -ChildPath $backupFolderName
 
-    # Check if a previous backup exists and remove it
+    # Check if a previous backup exists and remove it to prevent conflicts
     if (Test-Path -Path $backupPath) {
         Write-Host "Removing existing backup folder: $backupPath"
         Remove-Item -Path $backupPath -Recurse -Force -ErrorAction Stop
     }
 
-    # Create the new backup
+    # Create the new backup by copying the entire website directory
     Write-Host "Creating backup at: $backupPath"
     Copy-Item -Path $physicalPath -Destination $backupPath -Recurse -Force -ErrorAction Stop
     Write-Host "Backup created successfully."
@@ -96,7 +96,7 @@ try {
     Write-Host "Extracting files to: $physicalPath"
     # Using .NET for broader PowerShell version compatibility, as Expand-Archive requires PS v5.0+
     try {
-        # Load the required .NET assembly
+        # Load the required .NET assembly for zip operations
         Add-Type -AssemblyName System.IO.Compression.FileSystem
         $archive = [System.IO.Compression.ZipFile]::OpenRead($tempZipFile)
 
@@ -118,7 +118,7 @@ try {
         }
     }
     finally {
-        # Ensure the archive file handle is released
+        # Ensure the archive file handle is released, even if errors occur
         if ($archive) {
             $archive.Dispose()
         }
