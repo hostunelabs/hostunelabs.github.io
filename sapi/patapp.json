@@ -8,5 +8,10 @@
 		"hospital_code" : "NAZ",
 		"hospital_name" : "Nazareth Hospital",
 		"url" : "https://103.38.89.107:61003"
+	},
+	{
+		"hospital_code" : "SVH",
+		"hospital_name" : "St Vincent Hospital",
+		"url" : "https://117.211.188.18:62000"
 	}
 ]
