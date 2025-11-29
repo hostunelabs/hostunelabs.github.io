@@ -13,5 +13,10 @@
 		"hospital_code" : "SVH",
 		"hospital_name" : "St Vincent Hospital",
 		"url" : "https://117.211.188.18:62000"
+	},
+	{
+		"hospital_code" : "AABIND",
+		"hospital_name" : "AABIND Hospital",
+		"url" : "https://117.241.79.192:62000"
 	}
 ]
