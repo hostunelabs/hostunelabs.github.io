@@ -18,5 +18,10 @@
 		"hospital_code" : "AABIND",
 		"hospital_name" : "AABIND Hospital",
 		"url" : "https://117.241.79.192:62000"
+	},
+	{
+		"hospital_code" : "TESTM",
+		"hospital_name" : "TTest Hospital",
+		"url" : "https://117.241.74.135:45000"
 	}
 ]
