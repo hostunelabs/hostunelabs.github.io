@@ -2697,16 +2697,16 @@
                showToast("Aligned " + k.toUpperCase());
             } else if (isCtrl && k === "k") {
                e.preventDefault();
-               setColor("#000000");
+               handleColorClick("#000000", { type: "click", button: 0, preventDefault: () => {} });
             } else if (isCtrl && k === "r") {
                e.preventDefault();
-               setColor("#ef4444");
+               handleColorClick("#ef4444", { type: "click", button: 0, preventDefault: () => {} });
             } else if (isCtrl && k === "g") {
                e.preventDefault();
-               setColor("#22c55e");
+               handleColorClick("#22c55e", { type: "click", button: 0, preventDefault: () => {} });
             } else if (isCtrl && k === "b") {
                e.preventDefault();
-               setColor("#3b82f6");
+               handleColorClick("#3b82f6", { type: "click", button: 0, preventDefault: () => {} });
              } else if (e.key === "Delete" || e.key === "Backspace") {
                 deleteSelected();
              } else if (e.key === "[") setLineWidth(Math.max(1, currentWidth - 1));
