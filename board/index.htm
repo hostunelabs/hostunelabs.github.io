@@ -23,9 +23,24 @@
          }
          canvas {
             touch-action: none;
+            display: block;
          }
          .tool-btn {
             transition: all 0.2s ease;
+            min-height: 36px;
+            min-width: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            padding: 0.4rem !important;
+         }
+         @media (max-width: 640px) {
+            .tool-btn {
+               min-height: 44px;
+               min-width: 44px;
+               padding: 0.5rem !important;
+            }
          }
          .tool-btn.active {
             background-color: #e5e7eb;
@@ -34,6 +49,15 @@
          }
          .color-swatch {
             transition: transform 0.2s ease;
+            min-height: 20px;
+            min-width: 20px;
+            flex-shrink: 0;
+         }
+         @media (max-width: 640px) {
+            .color-swatch {
+               min-height: 24px;
+               min-width: 24px;
+            }
          }
          .color-swatch:hover,
          .color-swatch.active {
@@ -44,21 +68,38 @@
             -webkit-appearance: none;
             appearance: none;
             background: transparent;
+            height: 5px;
+            flex-shrink: 0;
          }
          input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
-            height: 16px;
-            width: 16px;
+            height: 20px;
+            width: 20px;
             border-radius: 50%;
             background: #2563eb;
-            margin-top: -6px;
+            margin-top: -7px;
             cursor: pointer;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+         }
+         input[type="range"]::-moz-range-thumb {
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            background: #2563eb;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
          }
          input[type="range"]::-webkit-slider-runnable-track {
             width: 100%;
-            height: 4px;
+            height: 5px;
             background: #e5e7eb;
             border-radius: 2px;
+         }
+         input[type="range"]::-moz-range-track {
+            background: #e5e7eb;
+            border-radius: 2px;
+            height: 5px;
          }
          .no-scrollbar::-webkit-scrollbar {
             display: none;
@@ -93,9 +134,10 @@
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
             padding: 4px;
             min-width: 160px;
+            max-width: calc(100vw - 16px);
          }
          .context-menu-item {
-            padding: 8px 12px;
+            padding: 10px 12px;
             font-size: 14px;
             color: #374151;
             cursor: pointer;
@@ -103,8 +145,19 @@
             align-items: center;
             gap: 8px;
             border-radius: 4px;
+            white-space: nowrap;
+            touch-action: manipulation;
+            flex-shrink: 0;
          }
-         .context-menu-item:hover {
+         @media (max-width: 640px) {
+            .context-menu-item {
+               padding: 12px 14px;
+               font-size: 15px;
+               min-height: 44px;
+            }
+         }
+         .context-menu-item:hover,
+         .context-menu-item:active {
             background-color: #f3f4f6;
             color: #111827;
          }
@@ -124,118 +177,181 @@
             background: red;
             transform: rotate(45deg);
          }
+
+         /* Responsive toolbar */
+         .toolbar-main {
+            display: flex;
+            flex-wrap: nowrap;
+            align-items: center;
+            gap: 1px;
+            overflow-x: hidden;
+            overflow-y: hidden;
+            max-height: 56px;
+         }
+
+         .toolbar-group {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            padding: 0 4px;
+            flex-shrink: 0;
+            border-right: 1px solid #e5e7eb;
+         }
+
+         .toolbar-group:last-child {
+            border-right: none;
+         }
+
+         @media (max-width: 640px) {
+            .toolbar-main {
+               bottom: 12px !important;
+               width: calc(100% - 12px) !important;
+               left: 6px !important;
+               transform: none !important;
+               gap: 4px !important;
+               padding: 6px 8px !important;
+               border-radius: 16px !important;
+               max-height: 70vh;
+            }
+            .toolbar-group {
+               gap: 4px !important;
+               padding: 0 6px !important;
+            }
+            .toolbar-group.border-r {
+               border-right: 1px solid #e5e7eb;
+            }
+         }
+
+         /* Ensure touch targets are 44x44 minimum */
+         @media (max-width: 1024px) {
+            button {
+               min-height: 44px;
+               min-width: 44px;
+            }
+         }
+
+         /* Mobile viewport optimization */
+         @media (orientation: landscape) and (max-height: 600px) {
+            .toolbar-main {
+               bottom: 8px !important;
+               max-height: 90px !important;
+            }
+            .toolbar-group {
+               gap: 2px !important;
+            }
+         }
       </style>
    </head>
    <body class="bg-gray-50 h-screen w-screen overflow-hidden flex flex-col font-sans" oncontextmenu="return false;">
       <!-- Logo -->
-      <img src="logo.png" alt="TuneBoard Logo" class="absolute top-4 left-6 z-20 h-5 w-auto select-none pointer-events-none" />
+      <img src="logo.png" alt="TuneBoard Logo" class="absolute top-3 left-4 md:top-4 md:left-6 z-20 h-4 md:h-5 w-auto select-none pointer-events-none" />
 
       <!-- Top Toolbar -->
       <div
-         class="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-20 flex items-center gap-2 p-2 bg-white/95 backdrop-blur-md rounded-2xl shadow-xl border border-gray-200 w-[95%] max-w-6xl overflow-x-auto no-scrollbar"
+         class="toolbar-main absolute bottom-4 left-1/2 transform -translate-x-1/2 z-20 p-2 bg-white/95 backdrop-blur-md rounded-2xl shadow-xl border border-gray-200 w-[95%] max-w-6xl"
       >
          <!-- Tools Group 1: Basics -->
-         <div class="flex items-center gap-1 pr-2 border-r border-gray-200 shrink-0">
+         <div class="toolbar-group">
             <button
-               class="tool-btn p-2 rounded-xl text-gray-600 hover:bg-gray-100"
+               class="tool-btn p-2 rounded-lg text-gray-600 hover:bg-gray-100"
                id="btn-select"
                onclick="setTool('select')"
                title="Select (S)"
             >
-               <i data-lucide="mouse-pointer-2" class="w-5 h-5"></i>
+               <i data-lucide="mouse-pointer-2" class="w-4 h-4"></i>
             </button>
             <button
-               class="tool-btn active p-2 rounded-xl text-gray-600 hover:bg-gray-100"
+               class="tool-btn active p-2 rounded-lg text-gray-600 hover:bg-gray-100"
                id="btn-pencil"
                onclick="setTool('pencil')"
                title="Pencil (P)"
             >
-               <i data-lucide="pencil" class="w-5 h-5"></i>
+               <i data-lucide="pencil" class="w-4 h-4"></i>
             </button>
              <button
-                class="tool-btn p-2 rounded-xl text-gray-600 hover:bg-gray-100"
+                class="tool-btn p-2 rounded-lg text-gray-600 hover:bg-gray-100"
                 id="btn-pencil-arrow"
                 onclick="setTool('pencil-arrow')"
                 title="Freehand Arrow (F)"
              >
-                <i data-lucide="corner-up-right" class="w-5 h-5"></i>
+                <i data-lucide="corner-up-right" class="w-4 h-4"></i>
              </button>
              <button
-                class="tool-btn p-2 rounded-xl text-gray-600 hover:bg-gray-100"
+                class="tool-btn p-2 rounded-lg text-gray-600 hover:bg-gray-100"
                 id="btn-laser"
                 onclick="setTool('laser')"
                 title="Laser Tool (Z)"
              >
-                <i data-lucide="zap" class="w-5 h-5"></i>
+                <i data-lucide="zap" class="w-4 h-4"></i>
              </button>
              <button
-                class="tool-btn p-2 rounded-xl text-gray-600 hover:bg-gray-100"
+                class="tool-btn p-2 rounded-lg text-gray-600 hover:bg-gray-100"
                 id="btn-eraser"
                 onclick="setTool('eraser')"
                 title="Eraser (E)"
              >
-                <i data-lucide="eraser" class="w-5 h-5"></i>
+                <i data-lucide="eraser" class="w-4 h-4"></i>
              </button>
          </div>
 
          <!-- Tools Group 2: Lines & Text -->
-         <div class="flex items-center gap-1 px-2 border-r border-gray-200 shrink-0">
+         <div class="toolbar-group">
             <button
-               class="tool-btn p-2 rounded-xl text-gray-600 hover:bg-gray-100"
+               class="tool-btn p-2 rounded-lg text-gray-600 hover:bg-gray-100"
                id="btn-line"
                onclick="setTool('line')"
                title="Line (L)"
             >
-               <i data-lucide="minus" class="w-5 h-5 transform -rotate-45"></i>
+               <i data-lucide="minus" class="w-4 h-4 transform -rotate-45"></i>
             </button>
             <button
-               class="tool-btn p-2 rounded-xl text-gray-600 hover:bg-gray-100"
+               class="tool-btn p-2 rounded-lg text-gray-600 hover:bg-gray-100"
                id="btn-arrow"
                onclick="setTool('arrow')"
                title="Curved Arrow (A)"
             >
-               <i data-lucide="move-up-right" class="w-5 h-5"></i>
+               <i data-lucide="move-up-right" class="w-4 h-4"></i>
             </button>
             <button
-               class="tool-btn p-2 rounded-xl text-gray-600 hover:bg-gray-100"
+               class="tool-btn p-2 rounded-lg text-gray-600 hover:bg-gray-100"
                id="btn-text"
                onclick="setTool('text')"
                title="Text (T)"
             >
-               <i data-lucide="type" class="w-5 h-5"></i>
+               <i data-lucide="type" class="w-4 h-4"></i>
             </button>
          </div>
 
          <!-- Tools Group 3: Shapes -->
-         <div class="flex items-center gap-1 px-2 border-r border-gray-200 shrink-0">
+         <div class="toolbar-group">
             <button
-               class="tool-btn p-2 rounded-xl text-gray-600 hover:bg-gray-100"
+               class="tool-btn p-2 rounded-lg text-gray-600 hover:bg-gray-100"
                id="btn-rect"
                onclick="setTool('rect')"
                title="Rectangle (R)"
             >
-               <i data-lucide="square" class="w-5 h-5"></i>
+               <i data-lucide="square" class="w-4 h-4"></i>
             </button>
             <button
-               class="tool-btn p-2 rounded-xl text-gray-600 hover:bg-gray-100"
+               class="tool-btn p-2 rounded-lg text-gray-600 hover:bg-gray-100"
                id="btn-circle"
                onclick="setTool('circle')"
                title="Circle (C)"
             >
-               <i data-lucide="circle" class="w-5 h-5"></i>
+               <i data-lucide="circle" class="w-4 h-4"></i>
             </button>
             <button
-               class="tool-btn p-2 rounded-xl text-gray-600 hover:bg-gray-100"
+               class="tool-btn p-2 rounded-lg text-gray-600 hover:bg-gray-100"
                id="btn-triangle"
                onclick="setTool('triangle')"
                title="Triangle (N)"
             >
-               <i data-lucide="triangle" class="w-5 h-5"></i>
+               <i data-lucide="triangle" class="w-4 h-4"></i>
             </button>
          </div>
 
          <!-- Colors -->
-         <div class="flex items-center gap-2 px-2 border-r border-gray-200 shrink-0">
+         <div class="toolbar-group" style="gap: 6px;">
             <div id="color-indicator" class="flex flex-col gap-0.5 mr-1" title="Top: Stroke, Bottom: Fill">
                <div id="stroke-preview" class="w-4 h-2 bg-black"></div>
                <div id="fill-preview" class="w-4 h-2 bg-transparent transparent-swatch"></div>
@@ -295,84 +411,83 @@
             </div>
          </div>
 
-         <!-- Brush Size -->
-         <div class="flex items-center gap-2 px-2 border-r border-gray-200 shrink-0 hidden md:flex">
-            <i data-lucide="circle-dot" class="w-4 h-4 text-gray-400"></i>
+         <!-- Brush Size (Desktop) -->
+         <div class="toolbar-group hidden md:flex" style="gap: 6px;">
+            <i data-lucide="circle-dot" class="w-4 h-4 text-gray-400 flex-shrink-0"></i>
             <input
                type="range"
                min="1"
                max="50"
-               value="4"
+               value="3"
                id="width-slider-desk"
                class="w-20"
                oninput="setLineWidth(this.value)"
                title="Thickness ([ / ])"
             />
-            <span id="width-val-desk" class="text-xs text-gray-500 w-4">4</span>
+            <span id="width-val-desk" class="text-xs text-gray-500 w-4 flex-shrink-0">3</span>
          </div>
 
          <!-- Actions Group 1: Files -->
-         <div class="flex items-center gap-1 px-2 border-r border-gray-200 shrink-0">
+         <div class="toolbar-group">
             <button
-               class="p-2 rounded-xl text-gray-600 hover:bg-gray-100"
+               class="tool-btn p-2 rounded-lg text-gray-600 hover:bg-gray-100"
                onclick="downloadImage()"
                title="Download (Ctrl+S)"
             >
-               <i data-lucide="download" class="w-5 h-5"></i>
+               <i data-lucide="download" class="w-4 h-4"></i>
             </button>
             <button
-               class="p-2 rounded-xl text-gray-600 hover:bg-gray-100"
+               class="tool-btn p-2 rounded-lg text-gray-600 hover:bg-gray-100"
                onclick="document.getElementById('imageInput').click()"
                title="Add Image"
             >
-               <i data-lucide="image" class="w-5 h-5"></i>
+               <i data-lucide="image" class="w-4 h-4"></i>
             </button>
             <input type="file" id="imageInput" accept="image/*" class="hidden" onchange="handleImageFile(this.files[0])" />
          </div>
 
          <!-- Actions Group 2: Board -->
-         <div class="flex items-center gap-1 px-2 border-r border-gray-200 shrink-0">
+         <div class="toolbar-group">
             <button
-               class="p-2 rounded-xl text-gray-600 hover:bg-gray-100"
+               class="tool-btn p-2 rounded-lg text-gray-600 hover:bg-gray-100"
                onclick="undo()"
                title="Undo (Ctrl+Z)"
             >
-               <i data-lucide="undo-2" class="w-5 h-5"></i>
+               <i data-lucide="undo-2" class="w-4 h-4"></i>
             </button>
             <button
-               class="p-2 rounded-xl text-gray-600 hover:bg-gray-100 text-red-500 hover:bg-red-50"
+               class="tool-btn p-2 rounded-lg text-gray-600 hover:bg-gray-100 text-red-500 hover:bg-red-50"
                onclick="clearBoard()"
                title="Clear All (Alt+N)"
             >
-               <i data-lucide="refresh-ccw" class="w-5 h-5"></i>
+               <i data-lucide="refresh-ccw" class="w-4 h-4"></i>
             </button>
          </div>
 
          <!-- Selection Actions -->
-         <div id="selection-actions" class="flex items-center gap-1 px-2 hidden">
+         <div id="selection-actions" class="toolbar-group hidden">
             <button
-               class="p-2 rounded-xl text-gray-600 hover:bg-gray-100"
+               class="tool-btn p-2 rounded-lg text-gray-600 hover:bg-gray-100"
                onclick="bringToFront()"
                title="Bring to Front"
             >
-               <i data-lucide="layers-2" class="w-5 h-5"></i>
+               <i data-lucide="layers-2" class="w-4 h-4"></i>
             </button>
             <button
-               class="p-2 rounded-xl text-gray-600 hover:bg-gray-100"
+               class="tool-btn p-2 rounded-lg text-gray-600 hover:bg-gray-100"
                onclick="sendToBack()"
                title="Send to Back"
             >
-               <i data-lucide="layers" class="w-5 h-5"></i>
+               <i data-lucide="layers" class="w-4 h-4"></i>
             </button>
             <button
                id="btn-delete-selected"
-               class="p-2 rounded-xl text-red-500 hover:bg-red-50"
+               class="tool-btn p-2 rounded-lg text-red-500 hover:bg-red-50"
                onclick="deleteSelected()"
                title="Delete (Del)"
             >
-               <i data-lucide="trash-2" class="w-5 h-5"></i>
+               <i data-lucide="trash-2" class="w-4 h-4"></i>
             </button>
-         </div>
          </div>
       </div>
 
@@ -386,21 +501,21 @@
             onclick="alignSelected('left')"
             title="Align Left (L)"
          >
-            <i data-lucide="arrow-left-to-line" class="w-5 h-5"></i>
+            <i data-lucide="arrow-left-to-line" class="w-4 h-4"></i>
          </button>
          <button
             class="tool-btn p-2 rounded-xl text-gray-600 hover:bg-gray-100"
             onclick="alignSelected('center-h')"
             title="Align Center Horizontal (H / E)"
          >
-            <i data-lucide="align-center-horizontal" class="w-5 h-5"></i>
+            <i data-lucide="align-center-horizontal" class="w-4 h-4"></i>
          </button>
          <button
             class="tool-btn p-2 rounded-xl text-gray-600 hover:bg-gray-100"
             onclick="alignSelected('right')"
             title="Align Right (R)"
          >
-            <i data-lucide="arrow-right-to-line" class="w-5 h-5"></i>
+            <i data-lucide="arrow-right-to-line" class="w-4 h-4"></i>
          </button>
          <div class="w-px h-6 bg-gray-200 mx-1"></div>
          <button
@@ -408,50 +523,51 @@
             onclick="alignSelected('top')"
             title="Align Top (T)"
          >
-            <i data-lucide="arrow-up-to-line" class="w-5 h-5"></i>
+            <i data-lucide="arrow-up-to-line" class="w-4 h-4"></i>
          </button>
          <button
             class="tool-btn p-2 rounded-xl text-gray-600 hover:bg-gray-100"
             onclick="alignSelected('middle-v')"
             title="Align Middle Vertical (C / V)"
          >
-            <i data-lucide="align-center-vertical" class="w-5 h-5"></i>
+            <i data-lucide="align-center-vertical" class="w-4 h-4"></i>
          </button>
          <button
             class="tool-btn p-2 rounded-xl text-gray-600 hover:bg-gray-100"
             onclick="alignSelected('bottom')"
             title="Align Bottom (B)"
          >
-            <i data-lucide="arrow-down-to-line" class="w-5 h-5"></i>
+            <i data-lucide="arrow-down-to-line" class="w-4 h-4"></i>
          </button>
       </div>
 
       <!-- Mobile Size Slider -->
       <div
-         class="absolute bottom-6 right-6 z-20 md:hidden bg-white/90 backdrop-blur-sm p-3 rounded-full shadow-lg border border-gray-200 flex items-center gap-3 w-[80%] max-w-xs"
+         class="absolute bottom-6 right-4 md:right-6 z-20 md:hidden bg-white/90 backdrop-blur-sm p-3 rounded-2xl shadow-lg border border-gray-200 flex items-center gap-3 flex-shrink-0"
+         style="max-width: 85%; min-width: min(250px, 85%);"
       >
-         <i data-lucide="circle-dot-dashed" class="w-4 h-4 text-gray-400"></i>
+         <i data-lucide="circle-dot-dashed" class="w-4 h-4 text-gray-400 flex-shrink-0"></i>
          <input
             type="range"
             min="1"
             max="50"
-            value="4"
+            value="3"
             id="width-slider-mob"
-            class="w-full"
+            class="flex-grow min-w-0"
             oninput="setLineWidth(this.value)"
          />
-         <span id="width-val-mob" class="text-xs text-gray-500 font-bold w-4">4</span>
+         <span id="width-val-mob" class="text-xs text-gray-500 font-bold w-5 flex-shrink-0">3</span>
       </div>
 
       <!-- Reset Zoom Button -->
-      <div class="absolute top-4 right-6 z-20 flex items-center gap-2">
+      <div class="absolute top-3 md:top-4 right-4 md:right-6 z-20 flex items-center gap-2">
          <button
-            class="tool-btn p-3 bg-white/95 backdrop-blur-md rounded-2xl shadow-xl border border-gray-200 text-gray-600 hover:bg-gray-100 flex items-center gap-2"
+            class="tool-btn p-2 md:p-3 bg-white/95 backdrop-blur-md rounded-2xl shadow-xl border border-gray-200 text-gray-600 hover:bg-gray-100 flex items-center gap-2"
             onclick="resetView()"
             title="Reset View (Esc)"
          >
-            <i data-lucide="refresh-cw" class="w-5 h-5"></i>
-            <span class="text-xs font-bold" id="zoom-percentage">100%</span>
+            <i data-lucide="refresh-cw" class="w-4 md:w-5 h-4 md:h-5"></i>
+            <span class="text-xs font-bold hidden sm:inline" id="zoom-percentage">100%</span>
          </button>
       </div>
 
@@ -459,33 +575,35 @@
 
       <div
          id="toast"
-         class="absolute top-20 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-4 py-2 rounded-full shadow-lg opacity-0 transition-opacity duration-300 pointer-events-none z-50 text-sm"
+         class="absolute top-20 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-4 py-2 rounded-full shadow-lg opacity-0 transition-opacity duration-300 pointer-events-none z-50 text-xs sm:text-sm"
       >
          Action Completed
       </div>
 
       <!-- Context Menu -->
-      <div id="context-menu" class="absolute bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50 hidden">
+      <div id="context-menu" class="absolute bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50 hidden overflow-y-auto" style="max-height: 90vh;">
          <div class="context-menu-item" id="paste-menu-item" style="display:none;" onclick="pasteFromClipboard(); hideContextMenu()">
-            <i data-lucide="clipboard-paste" class="w-4 h-4"></i>
-            Paste
+            <i data-lucide="clipboard-paste" class="w-4 h-4 flex-shrink-0"></i>
+            <span>Paste</span>
          </div>
          <div class="context-menu-separator" id="paste-separator" style="display:none; height: 1px; background-color: #e5e7eb; margin: 4px 0;"></div>
          <div class="context-menu-item" id="to-dotted-line-item" style="display:none;" onclick="toggleDottedLine(); hideContextMenu()">
-            <i data-lucide="circle-dot-dashed" class="w-4 h-4"></i>
-            Toggle Dotted Line
+            <i data-lucide="circle-dot-dashed" class="w-4 h-4 flex-shrink-0"></i>
+            <span>Toggle Dotted Line</span>
          </div>
+         <div class="context-menu-separator" id="editing-layering-separator" style="display:none; height: 1px; background-color: #e5e7eb; margin: 4px 0;"></div>
          <div class="context-menu-item" id="bring-to-front-item" style="display:none;" onclick="bringToFront(); hideContextMenu()">
-            <i data-lucide="layers-2" class="w-4 h-4"></i>
-            Bring to Front
+            <i data-lucide="layers-2" class="w-4 h-4 flex-shrink-0"></i>
+            <span>Bring to Front</span>
          </div>
          <div class="context-menu-item" id="send-to-back-item" style="display:none;" onclick="sendToBack(); hideContextMenu()">
-            <i data-lucide="layers" class="w-4 h-4"></i>
-            Send to Back
+            <i data-lucide="layers" class="w-4 h-4 flex-shrink-0"></i>
+            <span>Send to Back</span>
          </div>
+         <div class="context-menu-separator" id="layering-delete-separator" style="display:none; height: 1px; background-color: #e5e7eb; margin: 4px 0;"></div>
          <div class="context-menu-item text-red-500" id="delete-item" style="display:none;" onclick="deleteSelected(); hideContextMenu()">
-            <i data-lucide="trash-2" class="w-4 h-4"></i>
-            Delete
+            <i data-lucide="trash-2" class="w-4 h-4 flex-shrink-0"></i>
+            <span>Delete</span>
          </div>
       </div>
 
@@ -642,7 +760,7 @@
             ctx.setTransform(1, 0, 0, 1, 0, 0);
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            ctx.fillStyle = "#f9fafb";
+            ctx.fillStyle = "#ffffff";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
             drawGrid();
@@ -712,8 +830,9 @@
             ctx.save();
             ctx.setTransform(1, 0, 0, 1, 0, 0);
             ctx.beginPath();
-            ctx.strokeStyle = "#f1f5f9"; // Very light grid color
-            ctx.lineWidth = 1;
+            ctx.strokeStyle = "#fafbfc"; // Very light grid color
+            ctx.lineWidth = 0.5;
+            ctx.globalAlpha = 0.4;
 
             // Vertical lines
             for (let x = offsetX; x <= canvas.width; x += gridSize) {
@@ -1032,6 +1151,7 @@
                ctx.setLineDash([4 / camera.scale, 4 / camera.scale]);
                ctx.strokeRect(x - padding, y - padding, w + padding * 2, h + padding * 2);
 
+               // Corner handles only
                drawHandle(x, y);
                drawHandle(x + w, y);
                drawHandle(x, y + h);
@@ -1046,6 +1166,11 @@
             ctx.arc(x, y, handleSize, 0, 2 * Math.PI);
             ctx.fill();
             ctx.stroke();
+         }
+
+         function drawSquareHandle(x, y, size) {
+            ctx.fillRect(x - size, y - size, size * 2, size * 2);
+            ctx.strokeRect(x - size, y - size, size * 2, size * 2);
          }
 
          // --- Interaction Logic ---
@@ -1194,14 +1319,20 @@
                         temporarilyBreakConnections(shapes[hitIndex]);
                      }
                   } else {
-                     if (!selectedIndices.has(hitIndex)) {
+                     // Check if the hit shape is already in selection
+                     const wasAlreadySelected = selectedIndices.has(hitIndex);
+                     
+                     if (!wasAlreadySelected) {
                         // Restore connections for previously selected shapes
                         selectedIndices.forEach((idx) => restoreConnectionsForShape(shapes[idx]));
                         clearSelection();
                         addToSelection(hitIndex);
                      }
+                     
+                     // Always allow moving when clicking on any shape (filled or not)
                      isMovingSelection = true;
                      moveOffset = pos;
+                     
                      // Temporarily break connections for all selected shapes
                      selectedIndices.forEach((idx) => temporarilyBreakConnections(shapes[idx]));
                   }
@@ -1342,6 +1473,10 @@
                      canvas.style.cursor = "nwse-resize";
                   } else if (handle === "tr" || handle === "bl") {
                      canvas.style.cursor = "nesw-resize";
+                  } else if (handle === "top" || handle === "bottom") {
+                     canvas.style.cursor = "ns-resize";
+                  } else if (handle === "left" || handle === "right") {
+                     canvas.style.cursor = "ew-resize";
                   } else if (handle === "start" || handle === "end" || handle === "control") {
                      canvas.style.cursor = "move";
                   }
@@ -1846,6 +1981,20 @@
                newY = initY + dy;
                newW = initW - dx;
                newH = initH - dy;
+            } else if (activeHandle === "top") {
+               // Top side: resize height from top
+               newY = initY + dy;
+               newH = initH - dy;
+            } else if (activeHandle === "bottom") {
+               // Bottom side: resize height from bottom
+               newH = initH + dy;
+            } else if (activeHandle === "left") {
+               // Left side: resize width from left
+               newX = initX + dx;
+               newW = initW - dx;
+            } else if (activeHandle === "right") {
+               // Right side: resize width from right
+               newW = initW + dx;
             }
 
             if (shape.type === "text") {
@@ -1885,6 +2034,16 @@
                      newH = newW / shape.aspectRatio;
                      newX = initX + dx;
                      newY = initY + initH - newH;
+                  } else if (activeHandle === "top" || activeHandle === "bottom") {
+                     // Top/Bottom side: maintain aspect ratio with height change
+                     newW = Math.abs(newH * shape.aspectRatio);
+                     const centerX = initX + initW / 2;
+                     newX = centerX - newW / 2;
+                  } else if (activeHandle === "left" || activeHandle === "right") {
+                     // Left/Right side: maintain aspect ratio with width change
+                     newH = Math.abs(newW / shape.aspectRatio);
+                     const centerY = initY + initH / 2;
+                     newY = centerY - newH / 2;
                   }
                }
                shape.x = newX;
@@ -2156,10 +2315,22 @@
                   h = shape.h;
                }
 
+               // Corners (larger hit area)
                if (dist(pos, { x: x, y: y }) < r) return "tl";
                if (dist(pos, { x: x + w, y: y }) < r) return "tr";
                if (dist(pos, { x: x, y: y + h }) < r) return "bl";
                if (dist(pos, { x: x + w, y: y + h }) < r) return "br";
+
+               // Sides (smaller hit area - check for proximity to edge)
+               const sideR = 8 / camera.scale;
+               // Top side
+               if (Math.abs(pos.y - y) < sideR && pos.x > x + r && pos.x < x + w - r) return "top";
+               // Bottom side
+               if (Math.abs(pos.y - (y + h)) < sideR && pos.x > x + r && pos.x < x + w - r) return "bottom";
+               // Left side
+               if (Math.abs(pos.x - x) < sideR && pos.y > y + r && pos.y < y + h - r) return "left";
+               // Right side
+               if (Math.abs(pos.x - (x + w)) < sideR && pos.y > y + r && pos.y < y + h - r) return "right";
             }
             return null;
          }
@@ -2213,6 +2384,12 @@
                 const isInside = pos.x >= x && pos.x <= x + w && pos.y >= y && pos.y <= y + h;
                 if (isFilled && isInside) return true;
                 
+                // For unfilled shapes, allow clicking anywhere inside the bounding box
+                if (!isFilled) {
+                   return isInside;
+                }
+                
+                // For stroked shapes, check the stroke area
                 return (
                    pos.x > x - t &&
                    pos.x < x + w + t &&
@@ -2230,6 +2407,11 @@
                 const distSq = normalizedX * normalizedX + normalizedY * normalizedY;
                 
                 if (isFilled && distSq <= 1.05) return true;
+                
+                // For unfilled circles, allow clicking anywhere inside
+                if (!isFilled && distSq <= 1.0) return true;
+                
+                // For stroked circles, check the stroke area
                 return Math.abs(Math.sqrt(distSq) - 1) * Math.max(rx, ry) < t;
              } else if (shape.type === "triangle") {
                 const x = Math.min(shape.x, shape.x + shape.w);
@@ -2237,10 +2419,12 @@
                 const w = Math.abs(shape.w);
                 const h = Math.abs(shape.h);
                 
-                // For filled triangles, bounding box is usually acceptable for vector selection,
-                // but we can be slightly more precise by checking if it's within the bounding box at least.
+                // For filled triangles, check if inside the bounding box
                 const isInside = pos.x >= x && pos.x <= x + w && pos.y >= y && pos.y <= y + h;
                 if (isFilled && isInside) return true;
+                
+                // For unfilled triangles, allow clicking anywhere inside the bounding box
+                if (!isFilled && isInside) return true;
 
                 return pos.x > x - t && pos.x < x + w + t && pos.y > y - t && pos.y < y + h + t;
              } else if (shape.type === "text") {
@@ -2432,10 +2616,15 @@
                        shape.fillColor = color;
                        
                        // Auto-toggle text color for shapes with inner text
-                       if ((shape.type === "rect" || shape.type === "circle" || shape.type === "triangle") && color !== "transparent") {
-                          // Determine if color is light or dark
-                          const isLightColor = isColorLight(color);
-                          shape.innerTextColor = isLightColor ? "#000000" : "#ffffff";
+                       if (shape.type === "rect" || shape.type === "circle" || shape.type === "triangle") {
+                          if (color === "transparent") {
+                             // Set text color to black when fill is transparent
+                             shape.innerTextColor = "#000000";
+                          } else {
+                             // Determine if color is light or dark
+                             const isLightColor = isColorLight(color);
+                             shape.innerTextColor = isLightColor ? "#000000" : "#ffffff";
+                          }
                        }
                     } else {
                        if (color === "transparent" && shape.fillColor === "transparent") {
@@ -2548,8 +2737,10 @@
              const pasteItem = document.getElementById("paste-menu-item");
              const pasteSeparator = document.getElementById("paste-separator");
              const toDottedItem = document.getElementById("to-dotted-line-item");
+             const editingLayeringSeparator = document.getElementById("editing-layering-separator");
              const bringToFront = document.getElementById("bring-to-front-item");
              const sendToBack = document.getElementById("send-to-back-item");
+             const layeringDeleteSeparator = document.getElementById("layering-delete-separator");
              const deleteItem = document.getElementById("delete-item");
              
              if (hitIndex !== -1) {
@@ -2557,8 +2748,10 @@
                 pasteItem.style.display = "none";
                 pasteSeparator.style.display = "none";
                 if (toDottedItem) toDottedItem.style.display = "flex";
+                if (editingLayeringSeparator) editingLayeringSeparator.style.display = "block";
                 if (bringToFront) bringToFront.style.display = "flex";
                 if (sendToBack) sendToBack.style.display = "flex";
+                if (layeringDeleteSeparator) layeringDeleteSeparator.style.display = "block";
                 if (deleteItem) deleteItem.style.display = "flex";
                 
                 if (!selectedIndices.has(hitIndex)) {
@@ -2571,8 +2764,10 @@
                 pasteItem.style.display = "flex";
                 pasteSeparator.style.display = "block";
                 if (toDottedItem) toDottedItem.style.display = "none";
+                if (editingLayeringSeparator) editingLayeringSeparator.style.display = "none";
                 if (bringToFront) bringToFront.style.display = "none";
                 if (sendToBack) sendToBack.style.display = "none";
+                if (layeringDeleteSeparator) layeringDeleteSeparator.style.display = "none";
                 if (deleteItem) deleteItem.style.display = "none";
              }
              
@@ -2986,7 +3181,6 @@
 
          // Fix ReferenceError by exposing functions to window
          window.setTool = setTool;
-         window.setColor = setColor;
          window.setLineWidth = setLineWidth;
          window.undo = undo;
          window.deleteSelected = deleteSelected;
