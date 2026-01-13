@@ -539,13 +539,13 @@
                type="range"
                min="1"
                max="50"
-               value="3"
+               value="2"
                id="width-slider-desk"
                class="w-20"
                oninput="setLineWidth(this.value)"
                title="Thickness ([ / ])"
             />
-            <span id="width-val-desk" class="text-xs text-gray-500 w-4 flex-shrink-0">3</span>
+            <span id="width-val-desk" class="text-xs text-gray-500 w-4 flex-shrink-0">2</span>
          </div>
 
          <!-- Actions Group 1: Files -->
@@ -678,12 +678,12 @@
             type="range"
             min="1"
             max="50"
-            value="3"
+            value="2"
             id="width-slider-mob"
             class="flex-grow min-w-0"
             oninput="setLineWidth(this.value)"
          />
-         <span id="width-val-mob" class="text-xs text-gray-500 font-bold w-5 flex-shrink-0">3</span>
+         <span id="width-val-mob" class="text-xs text-gray-500 font-bold w-5 flex-shrink-0">2</span>
       </div>
 
       <!-- Reset Zoom Button -->
@@ -901,7 +901,7 @@
          let currentTool = "pencil";
          let currentColor = "#000000";
          let currentFillColor = "transparent";
-         let currentWidth = 4;
+         let currentWidth = 2;
 
          let isDragging = false;
          let startPos = { x: 0, y: 0 };
@@ -2506,7 +2506,7 @@
             // Check if shape is closed (first and last points are close)
             // Use relative distance based on shape size (more lenient for larger shapes)
             const closureDist = Math.hypot(lastPt.x - firstPt.x, lastPt.y - firstPt.y);
-            const closureThreshold = Math.max(50, shapeSize * 0.1); // At least 50px or 10% of shape size
+            const closureThreshold = Math.max(15, shapeSize * 0.15); // Reduced from 50px/10% to 15px/15% to better handle open shapes like "n"
             const isClosedShape = closureDist < closureThreshold;
             if (!isClosedShape) return null;
 
@@ -2623,6 +2623,12 @@
                edgeAlignmentRatio >= 0.5 &&
                aspectRatio < 10.0
             ) {
+               // Stricter check for thin shapes (high aspect ratio)
+               // Thin shapes like "i" or lines often have high edge alignment by accident
+               if (aspectRatio > 3.0 && cornerCount < 3) {
+                  return null;
+               }
+
                // Higher confidence for 4 corners
                if (cornerCount === 4) {
                   return { type: "rectangle", confidence: 0.95 };
@@ -2638,11 +2644,13 @@
 
             // Alternative rectangle detection: if edge alignment is very high,
             // it's likely a rectangle even with fewer corners
+            // BUT: Do not use this fallback for very thin shapes, as they trivially satisfy edge alignment
             if (
                shapeSize >= minSize &&
                edgeAlignmentRatio >= 0.7 &&
                aspectRatio < 10.0 &&
-               cornerCount >= 0
+               cornerCount >= 0 &&
+               Math.min(width, height) > 25 // Ensure shape has some thickness
             ) {
                return { type: "rectangle", confidence: 0.8 };
             }
@@ -4723,6 +4731,60 @@
             }
          });
 
+         // --- Persistence ---
+
+         const STORAGE_KEY = "scribble_canvas_v1";
+
+         function saveToLocalStorage() {
+            const data = {
+               shapes: shapes,
+               camera: camera,
+            };
+            try {
+               const json = JSON.stringify(data, (key, value) => {
+                  if (key === "image") return undefined; // Don't stringify Image objects
+                  return value;
+               });
+               localStorage.setItem(STORAGE_KEY, json);
+            } catch (e) {
+               console.error("Failed to save to local storage", e);
+            }
+         }
+
+         function loadFromLocalStorage() {
+            try {
+               const json = localStorage.getItem(STORAGE_KEY);
+               if (!json) return false;
+
+               const data = JSON.parse(json);
+               if (data.shapes) {
+                  // Re-hydrate images
+                  shapes = data.shapes.map((s) => {
+                     if (s.type === "image" && s.src) {
+                        const img = new Image();
+                        img.src = s.src;
+                        return { ...s, image: img };
+                     }
+                     return s;
+                  });
+               }
+               if (data.camera) {
+                  // Validate camera data
+                  if (
+                     typeof data.camera.x === "number" &&
+                     typeof data.camera.y === "number" &&
+                     typeof data.camera.scale === "number"
+                  ) {
+                     camera = data.camera;
+                  }
+               }
+               return true;
+            } catch (e) {
+               console.error("Failed to load from local storage", e);
+               return false;
+            }
+         }
+
          // --- History & Keys ---
 
          function saveHistory() {
@@ -4744,6 +4806,8 @@
             historyStack.push(s);
             if (historyStack.length > MAX_HISTORY) historyStack.shift();
             else historyStep++;
+
+            saveToLocalStorage();
          }
 
          function undo() {
@@ -4984,7 +5048,16 @@
          canvas.addEventListener("dblclick", onDoubleClick);
 
          resizeCanvas();
-         saveHistory();
+         if (loadFromLocalStorage()) {
+            render();
+            // Save loaded state as initial history
+            // We need to push the loaded state to history so undo works back to this point
+            // But saveHistory() calls saveToLocalStorage() again, which is redundant but harmless here.
+            saveHistory();
+            //showToast("Restored previous session");
+         } else {
+            saveHistory();
+         }
 
          // Fix ReferenceError by exposing functions to window
          window.setTool = setTool;
