@@ -452,7 +452,7 @@
                      id="btn-rhombus"
                      onclick="setTool('rhombus'); hideShapeDropdown()"
                   >
-                     <i data-lucide="diamond" class="w-4 h-4"></i>
+                     <i data-lucide="square-round-corner" class="w-4 h-4"></i>
                      <span>Rhombus</span>
                   </div>
                   <div
@@ -776,6 +776,24 @@
             <span>Toggle Dotted Line</span>
          </div>
          <div
+            class="context-menu-item"
+            id="toggle-start-arrow-item"
+            style="display: none"
+            onclick="toggleStartArrow(); hideContextMenu()"
+         >
+            <i data-lucide="arrow-left" class="w-4 h-4 flex-shrink-0"></i>
+            <span>Toggle Start Arrow</span>
+         </div>
+         <div
+            class="context-menu-item"
+            id="toggle-end-arrow-item"
+            style="display: none"
+            onclick="toggleEndArrow(); hideContextMenu()"
+         >
+            <i data-lucide="arrow-right" class="w-4 h-4 flex-shrink-0"></i>
+            <span>Toggle End Arrow</span>
+         </div>
+         <div
             class="context-menu-separator"
             id="editing-layering-separator"
             style="display: none; height: 1px; background-color: #e5e7eb; margin: 4px 0"
@@ -860,7 +878,7 @@
             style="display: none"
             onclick="changeSelectedShapesType('rhombus'); hideContextMenu()"
          >
-            <i data-lucide="diamond" class="w-4 h-4 flex-shrink-0"></i>
+            <i data-lucide="square-round-corner" class="w-4 h-4 flex-shrink-0"></i>
             <span>To Rhombus</span>
          </div>
          <div
@@ -963,6 +981,9 @@
          let hoveredSide = null; // 'top', 'right', 'bottom', 'left', or null
          let hoveredRectIndex = null; // Index of rectangle being hovered
 
+         // Connection hover state
+         let connectionHoverShape = null; // Shape being hovered during line/arrow connection
+
          // Context Menu State
          let contextMenuTarget = null;
 
@@ -1053,7 +1074,46 @@
 
             // Draw Shapes
             shapes.forEach((shape, index) => {
-               drawShape(shape, selectedIndices.has(index));
+               const isSelected = selectedIndices.has(index);
+               const isConnectionHover = connectionHoverShape && connectionHoverShape.id === shape.id;
+               drawShape(shape, isSelected);
+               
+               // Draw highlight effect for connection hover
+               if (isConnectionHover && !isSelected) {
+                  const b = getBoundingBox(shape);
+                  ctx.save();
+                  ctx.strokeStyle = "#3b82f6";
+                  ctx.lineWidth = 3 / camera.scale;
+                  ctx.setLineDash([]);
+                  ctx.globalAlpha = 0.6;
+                  
+                  if (shape.type === "circle") {
+                     const centerX = b.x + b.w / 2;
+                     const centerY = b.y + b.h / 2;
+                     const radiusX = Math.abs(b.w) / 2;
+                     const radiusY = Math.abs(b.h) / 2;
+                     ctx.beginPath();
+                     ctx.ellipse(centerX, centerY, radiusX + 4 / camera.scale, radiusY + 4 / camera.scale, 0, 0, Math.PI * 2);
+                     ctx.stroke();
+                  } else if (shape.type === "rhombus" || shape.type === "diamond") {
+                     const centerX = b.x + b.w / 2;
+                     const centerY = b.y + b.h / 2;
+                     const hw = Math.abs(b.w) / 2 + 4 / camera.scale;
+                     const hh = Math.abs(b.h) / 2 + 4 / camera.scale;
+                     ctx.beginPath();
+                     ctx.moveTo(centerX, centerY - hh);
+                     ctx.lineTo(centerX + hw, centerY);
+                     ctx.lineTo(centerX, centerY + hh);
+                     ctx.lineTo(centerX - hw, centerY);
+                     ctx.closePath();
+                     ctx.stroke();
+                  } else {
+                     const padding = 4 / camera.scale;
+                     ctx.strokeRect(b.x - padding, b.y - padding, b.w + padding * 2, b.h + padding * 2);
+                  }
+                  
+                  ctx.restore();
+               }
             });
 
             // Draw Laser Shapes (temporary, auto-deleting)
@@ -1292,8 +1352,35 @@
                   }
                   if (isStroked) ctx.stroke();
 
-                  // Draw Arrow Head for Freehand Arrow
-                  if (shape.type === "pencil-arrow" && shape.points.length > 1) {
+                  // Draw start arrow if hasStartArrow is enabled
+                  if (shape.hasStartArrow && shape.points.length > 1) {
+                     const points = shape.points;
+                     const first = points[0];
+                     
+                     // Calculate direction from first few points
+                     let angleSum = 0;
+                     let validAngles = 0;
+                     const lookAheadCount = Math.min(5, points.length - 1);
+
+                     for (let j = 1; j <= lookAheadCount; j++) {
+                        const next = points[j];
+                        if (next.x !== first.x || next.y !== first.y) {
+                           const angle = Math.atan2(next.y - first.y, next.x - first.x);
+                           angleSum += angle;
+                           validAngles++;
+                        }
+                     }
+
+                     if (validAngles > 0) {
+                        const avgAngle = angleSum / validAngles;
+                        ctx.fillStyle =
+                           shape.color && shape.color !== "transparent" ? shape.color : "#000000";
+                        drawArrowHead(ctx, first.x, first.y, avgAngle + Math.PI, shape.width * 3);
+                     }
+                  }
+
+                  // Draw Arrow Head for Freehand Arrow (end arrow)
+                  if ((shape.type === "pencil-arrow" || shape.hasEndArrow) && shape.points.length > 1) {
                      const points = shape.points;
                      const last = points[points.length - 1];
 
@@ -1327,6 +1414,21 @@
                ctx.moveTo(shape.start.x, shape.start.y);
                ctx.lineTo(shape.end.x, shape.end.y);
                if (isStroked) ctx.stroke();
+               
+               // Draw arrows if enabled
+               ctx.fillStyle = shape.color && shape.color !== "transparent" ? shape.color : "#000000";
+               if (shape.hasStartArrow) {
+                  const dx = shape.end.x - shape.start.x;
+                  const dy = shape.end.y - shape.start.y;
+                  const angle = Math.atan2(dy, dx) + Math.PI;
+                  drawArrowHead(ctx, shape.start.x, shape.start.y, angle, shape.width * 3);
+               }
+               if (shape.hasEndArrow) {
+                  const dx = shape.end.x - shape.start.x;
+                  const dy = shape.end.y - shape.start.y;
+                  const angle = Math.atan2(dy, dx);
+                  drawArrowHead(ctx, shape.end.x, shape.end.y, angle, shape.width * 3);
+               }
             } else if (shape.type === "arrow") {
                ctx.beginPath();
                ctx.moveTo(shape.start.x, shape.start.y);
@@ -1468,11 +1570,11 @@
             ctx.translate(x, y);
             ctx.rotate(angle);
             ctx.beginPath();
-            ctx.moveTo(0, 0);
-            ctx.lineTo(-size, -size / 2);
+            // Draw minimal line arrow (two lines forming a V shape)
+            ctx.moveTo(-size, -size / 2);
+            ctx.lineTo(0, 0);
             ctx.lineTo(-size, size / 2);
-            ctx.closePath();
-            ctx.fill();
+            ctx.stroke();
             ctx.restore();
          }
 
@@ -2064,6 +2166,7 @@
                saveHistory();
                currentShape = null;
                arrowCreationPhase = "idle";
+               setTool("select");
                render();
                return;
             }
@@ -2229,9 +2332,11 @@
                   for (let i = shapes.length - 1; i >= 0; i--) {
                      if (isPointInShape(pos, shapes[i])) {
                         startConn = attachToShape(pos, shapes[i], i);
+                        connectionHoverShape = shapes[i];
                         break;
                      }
                   }
+                  render(); // Render to show highlight immediately
                }
 
                // Hide shape recognition panel when starting a new drawing
@@ -2410,6 +2515,30 @@
                if (hoveredSide !== null || hoveredRectIndex !== null) {
                   hoveredSide = null;
                   hoveredRectIndex = null;
+                  render();
+               }
+            }
+
+            // Check for connection hover even when not dragging yet (for visual feedback)
+            if (
+               currentTool === "line" ||
+               currentTool === "arrow" ||
+               currentTool === "pencil" ||
+               currentTool === "pencil-arrow"
+            ) {
+               let foundHover = false;
+               for (let i = shapes.length - 1; i >= 0; i--) {
+                  if (isPointInShape(pos, shapes[i])) {
+                     if (connectionHoverShape !== shapes[i]) {
+                        connectionHoverShape = shapes[i];
+                        render();
+                     }
+                     foundHover = true;
+                     break;
+                  }
+               }
+               if (!foundHover && connectionHoverShape !== null) {
+                  connectionHoverShape = null;
                   render();
                }
             }
@@ -2817,6 +2946,9 @@
          }
 
          function onMouseUp(e) {
+            // Clear connection hover state
+            connectionHoverShape = null;
+            
             if (camera.isPanning) {
                camera.isPanning = false;
                updateCursor();
@@ -3286,6 +3418,42 @@
 
          // --- Alignment Logic ---
 
+         function hasConnections(shape) {
+            // Check if the shape itself is a connector with connections
+            if (
+               shape.type === "line" ||
+               shape.type === "arrow" ||
+               shape.type === "pencil" ||
+               shape.type === "pencil-arrow"
+            ) {
+               if (shape.startConnected || shape.endConnected) {
+                  return true;
+               }
+            }
+            
+            // Check if any other shape is connected to this shape
+            for (let i = 0; i < shapes.length; i++) {
+               const s = shapes[i];
+               if (s.id === shape.id) continue;
+               
+               if (
+                  s.type === "line" ||
+                  s.type === "arrow" ||
+                  s.type === "pencil" ||
+                  s.type === "pencil-arrow"
+               ) {
+                  if (
+                     (s.startConnected && s.startConnected.id === shape.id) ||
+                     (s.endConnected && s.endConnected.id === shape.id)
+                  ) {
+                     return true;
+                  }
+               }
+            }
+            
+            return false;
+         }
+
          function alignSelected(mode) {
             if (selectedIndices.size < 2) return;
 
@@ -3320,6 +3488,10 @@
                if (idx === anchorIdx) return;
 
                const shape = shapes[idx];
+               
+               // Skip shapes with connections (flow chart objects)
+               if (hasConnections(shape)) return;
+
                const b = getBoundingBox(shape);
                const bx = Math.min(b.x, b.x + b.w);
                const by = Math.min(b.y, b.y + b.h);
@@ -4326,6 +4498,8 @@
             const pasteItem = document.getElementById("paste-menu-item");
             const pasteSeparator = document.getElementById("paste-separator");
             const toDottedItem = document.getElementById("to-dotted-line-item");
+            const toggleStartArrowItem = document.getElementById("toggle-start-arrow-item");
+            const toggleEndArrowItem = document.getElementById("toggle-end-arrow-item");
             const editingLayeringSeparator = document.getElementById("editing-layering-separator");
             const bringToFront = document.getElementById("bring-to-front-item");
             const sendToBack = document.getElementById("send-to-back-item");
@@ -4343,20 +4517,50 @@
                // Right-clicked on a shape - hide paste, show shape options
                pasteItem.style.display = "none";
                pasteSeparator.style.display = "none";
-               if (toDottedItem) toDottedItem.style.display = "flex";
+               const hitShape = shapes[hitIndex];
+               // Only show 'Toggle Dotted Line' for non-text, non-image shapes
+               if (toDottedItem) {
+                  if (hitShape && hitShape.type !== "text" && hitShape.type !== "image") {
+                     toDottedItem.style.display = "flex";
+                  } else {
+                     toDottedItem.style.display = "none";
+                  }
+               }
+               // Show arrow toggle options for line, arrow, pencil, and pencil-arrow types
+               if (toggleStartArrowItem && toggleEndArrowItem) {
+                  if (hitShape && (hitShape.type === "line" || hitShape.type === "arrow" || hitShape.type === "pencil" || hitShape.type === "pencil-arrow")) {
+                     toggleStartArrowItem.style.display = "flex";
+                     toggleEndArrowItem.style.display = "flex";
+                  } else {
+                     toggleStartArrowItem.style.display = "none";
+                     toggleEndArrowItem.style.display = "none";
+                  }
+               }
                if (editingLayeringSeparator) editingLayeringSeparator.style.display = "block";
                if (bringToFront) bringToFront.style.display = "flex";
                if (sendToBack) sendToBack.style.display = "flex";
                if (layeringDeleteSeparator) layeringDeleteSeparator.style.display = "block";
                if (deleteItem) deleteItem.style.display = "flex";
-               // Show shape conversion items
-               if (shapeConversionSeparator) shapeConversionSeparator.style.display = "block";
-               if (changeToRectangleItem) changeToRectangleItem.style.display = "flex";
-               if (changeToCircleItem) changeToCircleItem.style.display = "flex";
-               if (changeToTriangleItem) changeToTriangleItem.style.display = "flex";
-               if (changeToOvalItem) changeToOvalItem.style.display = "flex";
-               if (changeToRhombusItem) changeToRhombusItem.style.display = "flex";
-               if (changeToDiamondItem) changeToDiamondItem.style.display = "flex";
+
+               // Only show shape conversion for allowed types
+               const convertibleTypes = ["rect", "circle", "triangle", "oval", "rhombus", "diamond"];
+               if (hitShape && convertibleTypes.includes(hitShape.type)) {
+                  if (shapeConversionSeparator) shapeConversionSeparator.style.display = "block";
+                  if (changeToRectangleItem) changeToRectangleItem.style.display = "flex";
+                  if (changeToCircleItem) changeToCircleItem.style.display = "flex";
+                  if (changeToTriangleItem) changeToTriangleItem.style.display = "flex";
+                  if (changeToOvalItem) changeToOvalItem.style.display = "flex";
+                  if (changeToRhombusItem) changeToRhombusItem.style.display = "flex";
+                  if (changeToDiamondItem) changeToDiamondItem.style.display = "flex";
+               } else {
+                  if (shapeConversionSeparator) shapeConversionSeparator.style.display = "none";
+                  if (changeToRectangleItem) changeToRectangleItem.style.display = "none";
+                  if (changeToCircleItem) changeToCircleItem.style.display = "none";
+                  if (changeToTriangleItem) changeToTriangleItem.style.display = "none";
+                  if (changeToOvalItem) changeToOvalItem.style.display = "none";
+                  if (changeToRhombusItem) changeToRhombusItem.style.display = "none";
+                  if (changeToDiamondItem) changeToDiamondItem.style.display = "none";
+               }
 
                if (!selectedIndices.has(hitIndex)) {
                   clearSelection();
@@ -4370,6 +4574,8 @@
                pasteItem.style.display = "flex";
                pasteSeparator.style.display = "block";
                if (toDottedItem) toDottedItem.style.display = "none";
+               if (toggleStartArrowItem) toggleStartArrowItem.style.display = "none";
+               if (toggleEndArrowItem) toggleEndArrowItem.style.display = "none";
                if (editingLayeringSeparator) editingLayeringSeparator.style.display = "none";
                if (bringToFront) bringToFront.style.display = "none";
                if (sendToBack) sendToBack.style.display = "none";
@@ -4444,6 +4650,36 @@
             saveHistory();
             render();
             showToast(shapes[Array.from(selectedIndices)[0]].isDotted ? "To Dotted" : "To Solid");
+         }
+
+         function toggleStartArrow() {
+            if (selectedIndices.size === 0) return;
+
+            selectedIndices.forEach((idx) => {
+               const shape = shapes[idx];
+               if (shape && (shape.type === "line" || shape.type === "arrow" || shape.type === "pencil" || shape.type === "pencil-arrow")) {
+                  shape.hasStartArrow = !shape.hasStartArrow;
+               }
+            });
+
+            saveHistory();
+            render();
+            showToast(shapes[Array.from(selectedIndices)[0]].hasStartArrow ? "Start Arrow Added" : "Start Arrow Removed");
+         }
+
+         function toggleEndArrow() {
+            if (selectedIndices.size === 0) return;
+
+            selectedIndices.forEach((idx) => {
+               const shape = shapes[idx];
+               if (shape && (shape.type === "line" || shape.type === "arrow" || shape.type === "pencil" || shape.type === "pencil-arrow")) {
+                  shape.hasEndArrow = !shape.hasEndArrow;
+               }
+            });
+
+            saveHistory();
+            render();
+            showToast(shapes[Array.from(selectedIndices)[0]].hasEndArrow ? "End Arrow Added" : "End Arrow Removed");
          }
 
          function clearBoard() {
