@@ -825,7 +825,7 @@
             onclick="changeSelectedShapesType('rect'); hideContextMenu()"
          >
             <i data-lucide="square" class="w-4 h-4 flex-shrink-0"></i>
-            <span>Change to Rectangle</span>
+            <span>To Rectangle</span>
          </div>
          <div
             class="context-menu-item"
@@ -834,7 +834,7 @@
             onclick="changeSelectedShapesType('circle'); hideContextMenu()"
          >
             <i data-lucide="circle" class="w-4 h-4 flex-shrink-0"></i>
-            <span>Change to Circle</span>
+            <span>To Circle</span>
          </div>
          <div
             class="context-menu-item"
@@ -843,7 +843,7 @@
             onclick="changeSelectedShapesType('triangle'); hideContextMenu()"
          >
             <i data-lucide="triangle" class="w-4 h-4 flex-shrink-0"></i>
-            <span>Change to Triangle</span>
+            <span>To Triangle</span>
          </div>
          <div
             class="context-menu-item"
@@ -852,7 +852,7 @@
             onclick="changeSelectedShapesType('oval'); hideContextMenu()"
          >
             <i data-lucide="circle" class="w-4 h-4 flex-shrink-0"></i>
-            <span>Change to Oval</span>
+            <span>To Oval</span>
          </div>
          <div
             class="context-menu-item"
@@ -861,7 +861,7 @@
             onclick="changeSelectedShapesType('rhombus'); hideContextMenu()"
          >
             <i data-lucide="diamond" class="w-4 h-4 flex-shrink-0"></i>
-            <span>Change to Rhombus</span>
+            <span>To Rhombus</span>
          </div>
          <div
             class="context-menu-item"
@@ -870,7 +870,7 @@
             onclick="changeSelectedShapesType('diamond'); hideContextMenu()"
          >
             <i data-lucide="diamond" class="w-4 h-4 flex-shrink-0"></i>
-            <span>Change to Diamond</span>
+            <span>To Diamond</span>
          </div>
       </div>
 
@@ -4263,9 +4263,31 @@
 
          function showContextMenu(x, y) {
             const menu = document.getElementById("context-menu");
+
+            // Show off-screen/invisible first to measure dimensions
+            menu.style.visibility = "hidden";
+            menu.classList.remove("hidden");
+
+            const width = menu.offsetWidth;
+            const height = menu.offsetHeight;
+            const winWidth = window.innerWidth;
+            const winHeight = window.innerHeight;
+
+            // Adjust position if it goes out of bounds
+            if (x + width > winWidth) {
+               x = winWidth - width - 10;
+            }
+            if (y + height > winHeight) {
+               y = winHeight - height - 10;
+            }
+
+            // Ensure positive coordinates (don't go off top/left)
+            x = Math.max(10, x);
+            y = Math.max(10, y);
+
             menu.style.left = x + "px";
             menu.style.top = y + "px";
-            menu.classList.remove("hidden");
+            menu.style.visibility = "visible";
          }
 
          function hideContextMenu() {
