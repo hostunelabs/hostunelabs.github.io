@@ -580,6 +580,45 @@
          Action Completed
       </div>
 
+      <!-- Shape Recognition Undo Panel -->
+      <div
+         id="shape-recognition-panel"
+         class="absolute top-4 left-1/2 transform -translate-x-1/2 bg-white rounded-lg shadow-xl border border-gray-200 px-4 py-3 z-50 hidden transition-all duration-300"
+         style="opacity: 0; transform: translate(-50%, -10px);"
+      >
+         <div class="flex items-center gap-2">
+            <button
+               id="undo-shape-btn"
+               class="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-md text-sm font-medium text-gray-700 transition-colors"
+               onclick="undoShapeRecognition()"
+            >
+               Undo
+            </button>
+            <div class="w-px h-6 bg-gray-300"></div>
+            <button
+               id="convert-rectangle-btn"
+               class="px-4 py-2 bg-blue-50 hover:bg-blue-100 rounded-md text-sm font-medium text-blue-700 transition-colors"
+               onclick="convertToShape('rectangle')"
+            >
+               Rectangle
+            </button>
+            <button
+               id="convert-circle-btn"
+               class="px-4 py-2 bg-blue-50 hover:bg-blue-100 rounded-md text-sm font-medium text-blue-700 transition-colors"
+               onclick="convertToShape('circle')"
+            >
+               Circle
+            </button>
+            <button
+               id="convert-triangle-btn"
+               class="px-4 py-2 bg-blue-50 hover:bg-blue-100 rounded-md text-sm font-medium text-blue-700 transition-colors"
+               onclick="convertToShape('triangle')"
+            >
+               Triangle
+            </button>
+         </div>
+      </div>
+
       <!-- Context Menu -->
       <div id="context-menu" class="absolute bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50 hidden overflow-y-auto" style="max-height: 90vh;">
          <div class="context-menu-item" id="paste-menu-item" style="display:none;" onclick="pasteFromClipboard(); hideContextMenu()">
@@ -669,6 +708,11 @@
           const LASER_DELETE_DELAY = 500; // Start deleting after 0.5 seconds
           const LASER_DELETE_DURATION = 1000; // Delete over 1 second
           const LASER_MAX_TAIL = 100; // Maximum points in laser tail
+
+          // Shape Recognition Undo Panel State
+          let originalPencilShape = null; // Store original pencil shape for undo
+          let convertedShapeIndex = -1; // Index of the converted shape in shapes array
+          let shapeRecognitionPanelTimer = null; // Timer for auto-hiding panel
 
          // Manipulation State
          let isManipulatingHandle = false;
@@ -1372,6 +1416,9 @@
                   }
                }
 
+               // Hide shape recognition panel when starting a new drawing
+               hideShapeRecognitionPanel();
+
                if (currentTool === "pencil") {
                   currentShape = {
                      id: newId,
@@ -1552,6 +1599,320 @@
             }
          }
 
+         // --- Shape Detection & Conversion ---
+
+         function detectShapeType(pencilShape) {
+            if (!pencilShape.points || pencilShape.points.length < 4) {
+               return null;
+            }
+
+            const points = pencilShape.points;
+            const firstPt = points[0];
+            const lastPt = points[points.length - 1];
+            
+            // Get bounding box first to calculate relative closure distance
+            let minX = points[0].x, maxX = points[0].x;
+            let minY = points[0].y, maxY = points[0].y;
+            points.forEach((p) => {
+               minX = Math.min(minX, p.x);
+               maxX = Math.max(maxX, p.x);
+               minY = Math.min(minY, p.y);
+               maxY = Math.max(maxY, p.y);
+            });
+
+            const width = maxX - minX;
+            const height = maxY - minY;
+            const shapeSize = Math.max(width, height);
+            
+            // Check if shape is closed (first and last points are close)
+            // Use relative distance based on shape size (more lenient for larger shapes)
+            const closureDist = Math.hypot(lastPt.x - firstPt.x, lastPt.y - firstPt.y);
+            const closureThreshold = Math.max(50, shapeSize * 0.1); // At least 50px or 10% of shape size
+            const isClosedShape = closureDist < closureThreshold;
+            if (!isClosedShape) return null;
+
+            const centerX = minX + width / 2;
+            const centerY = minY + height / 2;
+
+            // Calculate average distance from center to determine if it's a circle
+            let sumDistFromCenter = 0;
+            points.forEach((p) => {
+               sumDistFromCenter += Math.hypot(p.x - centerX, p.y - centerY);
+            });
+            const avgDistFromCenter = sumDistFromCenter / points.length;
+
+            // Circle detection: variance in distance from center should be low
+            let radiusVariance = 0;
+            points.forEach((p) => {
+               const dist = Math.hypot(p.x - centerX, p.y - centerY);
+               radiusVariance += Math.pow(dist - avgDistFromCenter, 2);
+            });
+            radiusVariance = Math.sqrt(radiusVariance / points.length);
+            const radiusVarianceRatio = radiusVariance / avgDistFromCenter;
+
+            // Detect major direction changes (corners) using curvature
+            const corners = [];
+            // Use smaller step for better corner detection
+            const step = Math.max(1, Math.floor(points.length / 80)); // More samples for better detection
+            
+            for (let i = step * 2; i < points.length - step * 2; i += step) {
+               const prev = points[i - step * 2];
+               const curr = points[i];
+               const next = points[i + step * 2];
+
+               const v1 = { x: curr.x - prev.x, y: curr.y - prev.y };
+               const v2 = { x: next.x - curr.x, y: next.y - curr.y };
+               
+               const len1 = Math.hypot(v1.x, v1.y);
+               const len2 = Math.hypot(v2.x, v2.y);
+               
+               if (len1 > 1 && len2 > 1) {
+                  const norm1 = { x: v1.x / len1, y: v1.y / len1 };
+                  const norm2 = { x: v2.x / len2, y: v2.y / len2 };
+                  const dot = norm1.x * norm2.x + norm1.y * norm2.y;
+                  
+                  // More sensitive corner detection: angle change > ~80 degrees (dot product < -0.1)
+                  // This will catch more corners including softer ones
+                  if (dot < -0.1) {
+                     corners.push({ x: curr.x, y: curr.y, angle: dot });
+                  }
+               }
+            }
+
+            // Remove duplicate/adjacent corners (cluster them)
+            const filteredCorners = [];
+            const minCornerDistance = Math.max(10, Math.min(width, height) * 0.12); // At least 10px or 12% of smallest dimension
+            
+            corners.forEach((corner) => {
+               let isNearExisting = false;
+               for (let existing of filteredCorners) {
+                  if (Math.hypot(corner.x - existing.x, corner.y - existing.y) < minCornerDistance) {
+                     isNearExisting = true;
+                     break;
+                  }
+               }
+               if (!isNearExisting) {
+                  filteredCorners.push(corner);
+               }
+            });
+
+            const cornerCount = filteredCorners.length;
+
+            // Determine shape type based on detection criteria
+            // Circle detection takes priority (lowest variance)
+            if (radiusVarianceRatio < 0.12) {
+               return { type: "circle", confidence: 0.9 };
+            }
+
+            // Rectangle detection: improved algorithm
+            // Check if points are mostly aligned to form a rectangle
+            const edgeThreshold = Math.max(10, Math.min(width, height) * 0.2); // At least 10px or 20% of smallest dimension
+            let pointsNearEdges = 0;
+            
+            points.forEach((p) => {
+               const distToLeft = Math.abs(p.x - minX);
+               const distToRight = Math.abs(p.x - maxX);
+               const distToTop = Math.abs(p.y - minY);
+               const distToBottom = Math.abs(p.y - maxY);
+               
+               // Check if point is near any edge of the bounding box
+               if (distToLeft < edgeThreshold || distToRight < edgeThreshold || 
+                   distToTop < edgeThreshold || distToBottom < edgeThreshold) {
+                  pointsNearEdges++;
+               }
+            });
+            
+            const edgeAlignmentRatio = pointsNearEdges / points.length;
+            const aspectRatio = Math.max(width, height) / Math.min(width, height);
+            
+            // Rectangle detection: More lenient criteria
+            // - Should have 2-8 corners (very forgiving for messy drawings)
+            // - At least 50% of points should be near the edges (lowered from 60%)
+            // - Aspect ratio should be reasonable (not too extreme)
+            // - Shape should have reasonable size (not too small)
+            const minSize = 20; // Minimum size for a valid rectangle
+            if (shapeSize >= minSize && 
+                (cornerCount >= 2 && cornerCount <= 8) && 
+                edgeAlignmentRatio >= 0.5 && 
+                aspectRatio < 10.0) {
+               // Higher confidence for 4 corners
+               if (cornerCount === 4) {
+                  return { type: "rectangle", confidence: 0.95 };
+               } else if (cornerCount === 3 || cornerCount === 5) {
+                  return { type: "rectangle", confidence: 0.85 };
+               } else if (cornerCount === 2 || cornerCount === 6) {
+                  return { type: "rectangle", confidence: 0.75 };
+               } else {
+                  // Even with 7-8 corners, if edges align well, it's likely a rectangle
+                  return { type: "rectangle", confidence: 0.65 };
+               }
+            }
+            
+            // Alternative rectangle detection: if edge alignment is very high, 
+            // it's likely a rectangle even with fewer corners
+            if (shapeSize >= minSize && 
+                edgeAlignmentRatio >= 0.7 && 
+                aspectRatio < 10.0 && 
+                cornerCount >= 0) {
+               return { type: "rectangle", confidence: 0.8 };
+            }
+
+            return null;
+         }
+
+         function convertPencilToShape(pencilShape, detectedShape) {
+            const points = pencilShape.points;
+            let minX = points[0].x, maxX = points[0].x;
+            let minY = points[0].y, maxY = points[0].y;
+            points.forEach((p) => {
+               minX = Math.min(minX, p.x);
+               maxX = Math.max(maxX, p.x);
+               minY = Math.min(minY, p.y);
+               maxY = Math.max(maxY, p.y);
+            });
+
+            const width = maxX - minX;
+            const height = maxY - minY;
+
+            // Map detected shape type to actual shape type used in rendering
+            const shapeTypeMap = {
+               "rectangle": "rect",
+               "circle": "circle",
+               "triangle": "triangle"
+            };
+            const mappedType = shapeTypeMap[detectedShape.type] || detectedShape.type;
+
+            const newShape = {
+               id: generateId(),
+               type: mappedType,
+               x: minX,
+               y: minY,
+               w: width,
+               h: height,
+               color: pencilShape.color,
+               fillColor: "transparent",
+               width: pencilShape.width,
+               startConnected: pencilShape.startConnected,
+               endConnected: pencilShape.endConnected,
+            };
+
+            return newShape;
+         }
+
+         function showShapeConversionPrompt(pencilShape, detectedShape) {
+            // Create a modal for shape conversion
+            const overlay = document.createElement("div");
+            overlay.id = "conversion-overlay";
+            overlay.style.cssText = `
+               position: fixed;
+               top: 0;
+               left: 0;
+               width: 100%;
+               height: 100%;
+               background: rgba(0, 0, 0, 0.5);
+               display: flex;
+               align-items: center;
+               justify-content: center;
+               z-index: 999;
+            `;
+
+            const modal = document.createElement("div");
+            modal.style.cssText = `
+               background: white;
+               padding: 24px;
+               border-radius: 12px;
+               box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+               max-width: 400px;
+               text-align: center;
+               font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            `;
+
+            const shapeNameMap = {
+               circle: "Circle",
+               rectangle: "Rectangle",
+               triangle: "Triangle",
+            };
+
+            const title = document.createElement("h2");
+            title.textContent = "Convert to Shape?";
+            title.style.cssText = "margin: 0 0 12px 0; font-size: 20px; color: #1f2937;";
+            modal.appendChild(title);
+
+            const message = document.createElement("p");
+            message.textContent = `Looks like you drew a ${shapeNameMap[detectedShape.type]}! Would you like to convert it to a shape?`;
+            message.style.cssText = "margin: 0 0 20px 0; font-size: 14px; color: #6b7280; line-height: 1.5;";
+            modal.appendChild(message);
+
+            const confidence = document.createElement("p");
+            confidence.textContent = `Confidence: ${Math.round(detectedShape.confidence * 100)}%`;
+            confidence.style.cssText = "margin: 0 0 20px 0; font-size: 12px; color: #9ca3af;";
+            modal.appendChild(confidence);
+
+            const buttonContainer = document.createElement("div");
+            buttonContainer.style.cssText = "display: flex; gap: 12px; justify-content: center;";
+
+            const cancelBtn = document.createElement("button");
+            cancelBtn.textContent = "Keep as Drawing";
+            cancelBtn.style.cssText = `
+               padding: 8px 16px;
+               border: 1px solid #d1d5db;
+               background: white;
+               border-radius: 6px;
+               cursor: pointer;
+               font-size: 14px;
+               color: #6b7280;
+               transition: all 0.2s;
+            `;
+            cancelBtn.onmouseover = () => cancelBtn.style.background = "#f9fafb";
+            cancelBtn.onmouseout = () => cancelBtn.style.background = "white";
+            cancelBtn.onclick = () => {
+               overlay.remove();
+            };
+            buttonContainer.appendChild(cancelBtn);
+
+            const convertBtn = document.createElement("button");
+            convertBtn.textContent = "Convert";
+            convertBtn.style.cssText = `
+               padding: 8px 16px;
+               border: none;
+               background: #3b82f6;
+               color: white;
+               border-radius: 6px;
+               cursor: pointer;
+               font-size: 14px;
+               font-weight: 600;
+               transition: all 0.2s;
+            `;
+            convertBtn.onmouseover = () => convertBtn.style.background = "#2563eb";
+            convertBtn.onmouseout = () => convertBtn.style.background = "#3b82f6";
+            convertBtn.onclick = () => {
+               // Remove the pencil shape from shapes array
+               const pencilIndex = shapes.indexOf(pencilShape);
+               if (pencilIndex > -1) {
+                  shapes.splice(pencilIndex, 1);
+               }
+
+               // Add the converted shape
+               const newShape = convertPencilToShape(pencilShape, detectedShape);
+               shapes.push(newShape);
+
+               // Update selection
+               clearSelection();
+               addToSelection(shapes.length - 1);
+
+               // Save history and render
+               saveHistory();
+               render();
+               showToast(`Converted to ${shapeNameMap[detectedShape.type]}`);
+               overlay.remove();
+            };
+            buttonContainer.appendChild(convertBtn);
+
+            modal.appendChild(buttonContainer);
+            overlay.appendChild(modal);
+            document.body.appendChild(overlay);
+         }
+
          function onMouseUp(e) {
             if (camera.isPanning) {
                camera.isPanning = false;
@@ -1669,12 +2030,30 @@
                         }, 16); // ~60fps
                         // Don't save to history or shapes array
                      } else {
-                        shapes.push(currentShape);
-                        // Keep pencil and pencil-arrow tools active for continuous drawing
+                        // Check if pencil shape looks like a closed shape
                         if (currentShape.type === "pencil" || currentShape.type === "pencil-arrow") {
-                           // Don't switch tool, don't select - just continue drawing
-                           saveHistory();
+                           const detectedShape = detectShapeType(currentShape);
+                           if (detectedShape) {
+                              // Convert and show undo panel
+                              const newShape = convertPencilToShape(currentShape, detectedShape);
+                              shapes.push(newShape);
+                              const convertedIndex = shapes.length - 1;
+                              clearSelection();
+                              addToSelection(convertedIndex);
+                              saveHistory();
+                              render();
+                              
+                              // Show the undo panel with the original shape
+                              showShapeRecognitionPanel(currentShape, convertedIndex);
+                           } else {
+                              // No shape detected, keep as pencil drawing
+                              shapes.push(currentShape);
+                              saveHistory();
+                           }
                         } else {
+                           shapes.push(currentShape);
+                           // Keep pencil and pencil-arrow tools active for continuous drawing
+                           // Don't switch tool, don't select - just continue drawing
                            clearSelection();
                            selectedIndices.add(shapes.length - 1);
                            setTool("select", true); // Switch tool while keeping the new selection
@@ -2531,6 +2910,9 @@
          }
 
           function setTool(tool, keepSelection = false) {
+             // Hide shape recognition panel when switching tools
+             hideShapeRecognitionPanel();
+             
              currentTool = tool;
              document.querySelectorAll(".tool-btn").forEach((btn) => btn.classList.remove("active"));
  
@@ -2870,6 +3252,119 @@
             }
          }
 
+         // --- Shape Recognition Undo Panel Functions ---
+
+         function showShapeRecognitionPanel(originalShape, convertedIndex) {
+            const panel = document.getElementById("shape-recognition-panel");
+            if (!panel) return;
+
+            // Store the original shape and converted index
+            originalPencilShape = JSON.parse(JSON.stringify(originalShape)); // Deep copy
+            convertedShapeIndex = convertedIndex;
+
+            // Clear any existing timer
+            if (shapeRecognitionPanelTimer) {
+               clearTimeout(shapeRecognitionPanelTimer);
+               shapeRecognitionPanelTimer = null;
+            }
+
+            // Show the panel with animation
+            panel.classList.remove("hidden");
+            setTimeout(() => {
+               panel.style.opacity = "1";
+               panel.style.transform = "translate(-50%, 0)";
+            }, 10);
+
+            // Auto-hide after 4 seconds
+            shapeRecognitionPanelTimer = setTimeout(() => {
+               hideShapeRecognitionPanel();
+            }, 4000);
+         }
+
+         function hideShapeRecognitionPanel() {
+            const panel = document.getElementById("shape-recognition-panel");
+            if (!panel) return;
+
+            // Clear timer
+            if (shapeRecognitionPanelTimer) {
+               clearTimeout(shapeRecognitionPanelTimer);
+               shapeRecognitionPanelTimer = null;
+            }
+
+            // Hide with animation
+            panel.style.opacity = "0";
+            panel.style.transform = "translate(-50%, -10px)";
+            setTimeout(() => {
+               panel.classList.add("hidden");
+               originalPencilShape = null;
+               convertedShapeIndex = -1;
+            }, 300);
+         }
+
+         function undoShapeRecognition() {
+            if (originalPencilShape === null || convertedShapeIndex === -1) {
+               hideShapeRecognitionPanel();
+               return;
+            }
+
+            // Remove the converted shape
+            if (shapes[convertedShapeIndex]) {
+               shapes.splice(convertedShapeIndex, 1);
+            }
+
+            // Restore the original pencil shape
+            shapes.push(originalPencilShape);
+            clearSelection();
+            addToSelection(shapes.length - 1);
+            saveHistory();
+            render();
+
+            hideShapeRecognitionPanel();
+            showToast("Reverted to original drawing");
+         }
+
+         function convertToShape(shapeType) {
+            if (originalPencilShape === null || convertedShapeIndex === -1) {
+               hideShapeRecognitionPanel();
+               return;
+            }
+
+            // Remove the current converted shape
+            if (shapes[convertedShapeIndex]) {
+               shapes.splice(convertedShapeIndex, 1);
+            }
+
+            // Convert to the requested shape type
+            const detectedShape = { type: shapeType };
+            const newShape = convertPencilToShape(originalPencilShape, detectedShape);
+            shapes.push(newShape);
+            
+            // Update the converted shape index
+            convertedShapeIndex = shapes.length - 1;
+            
+            clearSelection();
+            addToSelection(convertedShapeIndex);
+            saveHistory();
+            render();
+
+            const shapeNameMap = {
+               "rectangle": "Rectangle",
+               "circle": "Circle",
+               "triangle": "Triangle"
+            };
+            const shapeName = shapeNameMap[shapeType] || shapeType;
+            showToast(`Converted to ${shapeName}`);
+            
+            // Keep panel open for further conversions
+            // Reset the timer
+            if (shapeRecognitionPanelTimer) {
+               clearTimeout(shapeRecognitionPanelTimer);
+            }
+            shapeRecognitionPanelTimer = setTimeout(() => {
+               hideShapeRecognitionPanel();
+            }, 4000);
+         }
+
          // --- Image Upload Logic ---
 
          function handleImageFile(file) {
@@ -3192,6 +3687,8 @@
          window.handleColorClick = handleColorClick;
          window.bringToFront = bringToFront;
          window.sendToBack = sendToBack;
+         window.undoShapeRecognition = undoShapeRecognition;
+         window.convertToShape = convertToShape;
          window.pasteFromClipboard = pasteFromClipboard;
          window.toggleDottedLine = toggleDottedLine;
          window.setColor = (c) => handleColorClick(c, { button: 0 }); // Fallback for any old calls
