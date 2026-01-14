@@ -128,7 +128,7 @@
 <i data-lucide=arrow-left-to-line class="w-4 h-4"></i>
 </button>
 <button class="tool-btn p-2 rounded-xl text-gray-600 hover:bg-gray-100" onclick="alignSelected('center-h')" title="Align Center Horizontal (H / E)">
-<i data-lucide=align-center-horizontal class="w-4 h-4"></i>
+<i data-lucide=align-center-vertical class="w-4 h-4"></i>
 </button>
 <button class="tool-btn p-2 rounded-xl text-gray-600 hover:bg-gray-100" onclick="alignSelected('right')" title="Align Right (R)">
 <i data-lucide=arrow-right-to-line class="w-4 h-4"></i>
@@ -138,7 +138,7 @@
 <i data-lucide=arrow-up-to-line class="w-4 h-4"></i>
 </button>
 <button class="tool-btn p-2 rounded-xl text-gray-600 hover:bg-gray-100" onclick="alignSelected('middle-v')" title="Align Middle Vertical (C / V)">
-<i data-lucide=align-center-vertical class="w-4 h-4"></i>
+<i data-lucide=align-center-horizontal class="w-4 h-4"></i>
 </button>
 <button class="tool-btn p-2 rounded-xl text-gray-600 hover:bg-gray-100" onclick="alignSelected('bottom')" title="Align Bottom (B)">
 <i data-lucide=arrow-down-to-line class="w-4 h-4"></i>
@@ -394,7 +394,7 @@ function hasConnections(shape){if(shape.type==="line"||shape.type==="arrow"||sha
 for(let i=0;i<shapes.length;i++){const s=shapes[i];if(s.id===shape.id)continue;if(s.type==="line"||s.type==="arrow"||s.type==="pencil"||s.type==="pencil-arrow"){if((s.startConnected&&s.startConnected.id===shape.id)||(s.endConnected&&s.endConnected.id===shape.id)){return true;}}}
 return false;}
 function alignSelected(mode){if(selectedIndices.size<2)return;let anchorIdx;if(selectionQueue.length>0){anchorIdx=selectionQueue[selectionQueue.length-1];}else{const indices=Array.from(selectedIndices);anchorIdx=indices[indices.length-1];}
-const anchorShape=shapes[anchorIdx];const anchorBox=getBoundingBox(anchorShape);const anchorX=Math.min(anchorBox.x,anchorBox.x+anchorBox.w);const anchorY=Math.min(anchorBox.y,anchorBox.y+anchorBox.h);const anchorW=Math.abs(anchorBox.w);const anchorH=Math.abs(anchorBox.h);let refLeft=anchorX;let refRight=anchorX+anchorW;let refTop=anchorY;let refBottom=anchorY+anchorH;let refCenterH=anchorX+anchorW/2;let refMiddleV=anchorY+anchorH/2;selectedIndices.forEach((idx)=>{if(idx===anchorIdx)return;const shape=shapes[idx];if(hasConnections(shape))return;const b=getBoundingBox(shape);const bx=Math.min(b.x,b.x+b.w);const by=Math.min(b.y,b.y+b.h);const bw=Math.abs(b.w);const bh=Math.abs(b.h);let dx=0;let dy=0;if(mode==="left")dx=refLeft-bx;else if(mode==="center-h")dy=refMiddleV-(by+bh/2);else if(mode==="right")dx=refRight-(bx+bw);else if(mode==="top")dy=refTop-by;else if(mode==="middle-v")dx=refCenterH-(bx+bw/2);else if(mode==="bottom")dy=refBottom-(by+bh);moveShape(shape,dx,dy);});updateConnections();render();saveHistory();}
+const anchorShape=shapes[anchorIdx];const anchorBox=getBoundingBox(anchorShape);const anchorX=Math.min(anchorBox.x,anchorBox.x+anchorBox.w);const anchorY=Math.min(anchorBox.y,anchorBox.y+anchorBox.h);const anchorW=Math.abs(anchorBox.w);const anchorH=Math.abs(anchorBox.h);let refLeft=anchorX;let refRight=anchorX+anchorW;let refTop=anchorY;let refBottom=anchorY+anchorH;let refCenterH=anchorX+anchorW/2;let refMiddleV=anchorY+anchorH/2;selectedIndices.forEach((idx)=>{if(idx===anchorIdx)return;const shape=shapes[idx];if(hasConnections(shape))return;const b=getBoundingBox(shape);const bx=Math.min(b.x,b.x+b.w);const by=Math.min(b.y,b.y+b.h);const bw=Math.abs(b.w);const bh=Math.abs(b.h);let dx=0;let dy=0;if(mode==="left")dx=refLeft-bx;else if(mode==="center-h")dx=refCenterH-(bx+bw/2);else if(mode==="right")dx=refRight-(bx+bw);else if(mode==="top")dy=refTop-by;else if(mode==="middle-v")dy=refMiddleV-(by+bh/2);else if(mode==="bottom")dy=refBottom-(by+bh);moveShape(shape,dx,dy);});updateConnections();render();saveHistory();}
 function moveShape(shape,dx,dy){if(shape.type==="pencil"||shape.type==="pencil-arrow"){shape.points.forEach((p)=>{p.x+=dx;p.y+=dy;});}else if(shape.type==="line"||shape.type==="arrow"){shape.start.x+=dx;shape.start.y+=dy;shape.end.x+=dx;shape.end.y+=dy;if(shape.control){shape.control.x+=dx;shape.control.y+=dy;}}else{shape.x+=dx;shape.y+=dy;}}
 function resizeShape(shape,init,pos){if(activeHandle==="bend"){if(shape.hasEndArrow===undefined){shape.hasEndArrow=false;}
 shape.type="arrow";shape.control=pos;activeHandle="control";return;}
