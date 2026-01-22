@@ -5,6 +5,7 @@
   "scope": "./",
   "display": "standalone",
   "orientation": "any",
+  "prefer_related_applications": false,
   "background_color": "#ffffff",
   "theme_color": "#ffffff",
   "description": "Whiteboard application",
