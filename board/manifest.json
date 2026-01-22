@@ -1,7 +1,8 @@
 {
   "name": "TuneBoard",
   "short_name": "TuneBoard",
-  "start_url": "index.htm",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#ffffff",
