@@ -1,5 +1,6 @@
 const CACHE_NAME = 'tuneboard-v1';
 const ASSETS = [
+  './',
   'index.htm',
   'manifest.json',
   'favicon.png',
@@ -7,10 +8,15 @@ const ASSETS = [
 ];
 
 self.addEventListener('install', (event) => {
+  self.skipWaiting(); // Force waiting service worker to become active
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then((cache) => cache.addAll(ASSETS))
   );
+});
+
+self.addEventListener('activate', (event) => {
+  event.waitUntil(self.clients.claim()); // Take control of all clients immediately
 });
 
 self.addEventListener('fetch', (event) => {

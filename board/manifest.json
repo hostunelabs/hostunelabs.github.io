@@ -1,9 +1,10 @@
 {
   "name": "TuneBoard",
   "short_name": "TuneBoard",
-  "start_url": "./",
+  "start_url": "./index.htm",
   "scope": "./",
   "display": "standalone",
+  "orientation": "any",
   "background_color": "#ffffff",
   "theme_color": "#ffffff",
   "description": "Whiteboard application",
