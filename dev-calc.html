@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>DevCalc - Text Expression Calculator</title>
+
+    <!-- PWA: Theme Color -->
+    <meta name="theme-color" content="#252526">
+    
+    <!-- PWA: iOS Capabilities -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="DevCalc">
+
+    <!-- PWA: Icons (Embedded SVG base64) -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgZmlsbD0iIzFlMWUxZSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjNGVjOWIwIiBmb250LWZhbWlseT0ibW9ub3NwYWNlIiBmb250LXdlaWdodD0iYm9sZCIgZm9udC1zaXplPSIyMDAiPiZndDtfPC90ZXh0Pjwvc3ZnPg==">
+    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgZmlsbD0iIzFlMWUxZSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjNGVjOWIwIiBmb250LWZhbWlseT0ibW9ub3NwYWNlIiBmb250LXdlaWdodD0iYm9sZCIgZm9udC1zaXplPSIyMDAiPiZndDtfPC90ZXh0Pjwvc3ZnPg==">
+
+    <!-- PWA: Manifest (Embedded JSON base64) -->
+    <!-- Content: {"name":"DevCalc","short_name":"DevCalc","start_url":".","display":"standalone","background_color":"#1e1e1e","theme_color":"#252526","icons":[{"src":"data:image/svg+xml;base64,...","sizes":"512x512","type":"image/svg+xml"}]} -->
+    <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiRGV2Q2FsYyIsInNob3J0X25hbWUiOiJEZXZDYWxjIiwic3RhcnRfdXJsIjoiLiIsImRpc3BsYXkiOiJzdGFuZGFsb25lIiwiYmFja2dyb3VuZF9jb2xvciI6IiMxZTFlMWUiLCJ0aGVtZV9jb2xvciI6IiMyNTI1MjYiLCJpY29ucyI6W3sic3JjIjoiZGF0YTppbWFnZS9zdmcreG1sO2Jhc2U2NCxQSE4yWnlCNGJXeHVjejBpYUhSMGNEb3ZMM2QzZHk1M015NXZjbWN2TWpBd01DOXpkbWNpSUhaeFpYZENiM2c5SWpBd01DQTFNVEl4TlRJaVPoMXlaV04wSUhkcFpIUm9QU0kxTVRJaUlHaGxhV2RvZEQwaU5URXlJaVptaW14c1BSIXpNVVV4WlNJdlBqeDBaWGgwSUhnOUlqVXdKU0lnZTQwaU5UQlWlSBFiMmR2Ym1sdVpYSW9jbUZ6Wld4cGJtVTlJbTFwWkdSc1pTSjBaWGgwTFdGdVkyaHZjbDBpYldsa1pHeGxJaVptaW14c1BSIXBaV001WWpBaUlHWnZiblF0Wm1GdGFXeDVQU0l0YjI1dmMzQmhZMlVpSUdadmJuUXRkMlZwWjJoMFBTSWliMnhsIiBmb250LXNpemU9IjIwMCI+Jmd0O188L3RleHQ+PC9zdmc+Iiwic2l6ZXMiOiI1MTJ4NTEyIiwidHlwZSI6ImltYWdlL3N2Zyt4bWwifV19">
+
+    <style>
+        :root {
+            --bg-color: #1e1e1e;
+            --surface-color: #252526;
+            --input-bg: #3c3c3c;
+            --text-primary: #d4d4d4;
+            --text-secondary: #858585;
+            --accent: #4ec9b0; /* Cyan-ish for math */
+            --result-color: #ce9178; /* Orange-ish for numbers */
+            --border: #444;
+            --danger: #f44336;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            /* Prevent bounce on mobile */
+            overscroll-behavior: none;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            height: 90vh;
+            /* Adjust height for mobile Safari address bar */
+            height: 90dvh; 
+            background-color: var(--surface-color);
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            border: 1px solid var(--border);
+        }
+
+        /* --- Header --- */
+        .header {
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #2d2d2d;
+            border-radius: 8px 8px 0 0;
+            /* Extra padding for safe area on iPhone X+ */
+            padding-top: max(15px, env(safe-area-inset-top));
+        }
+
+        .title {
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .clear-btn {
+            background: transparent;
+            border: 1px solid var(--danger);
+            color: var(--danger);
+            padding: 4px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+            /* Prevent text selection on mobile tap */
+            user-select: none;
+        }
+
+        .clear-btn:hover {
+            background: var(--danger);
+            color: white;
+        }
+
+        /* --- History Section --- */
+        .history-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            -webkit-overflow-scrolling: touch; /* Smooth scrolling iOS */
+        }
+
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 6px;
+            transition: background 0.2s;
+            group;
+        }
+
+        .history-item:hover {
+            background: rgba(255,255,255,0.06);
+        }
+
+        .history-item:focus {
+            outline: none;
+            background: rgba(255,255,255,0.1);
+        }
+
+        .calc-data {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            cursor: pointer;
+            width: 100%; /* Ensure tap target is wide */
+        }
+
+        .hist-expr {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-weight: bold;
+        }
+
+        .hist-res {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--result-color);
+        }
+
+        .actions {
+            opacity: 0; /* Hidden by default */
+            display: flex;
+            gap: 8px;
+            transition: opacity 0.2s;
+        }
+        
+        /* Show actions always on smaller screens (touch devices) */
+        @media (max-width: 600px) {
+            .actions {
+                opacity: 0.8;
+            }
+        }
+
+        .history-item:hover .actions {
+            opacity: 1;
+        }
+
+        .icon-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 8px; /* Larger hit area for touch */
+            border-radius: 4px;
+            opacity: 1;
+            color: white;
+        }
+
+        .icon-btn:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        /* --- Input Section --- */
+        .input-wrapper {
+            padding: 20px;
+            border-top: 1px solid var(--border);
+            background: #2d2d2d;
+            border-radius: 0 0 8px 8px;
+            position: relative;
+            /* Extra padding for safe area on iPhone X+ */
+            padding-bottom: max(20px, env(safe-area-inset-bottom));
+        }
+
+        .input-group {
+            position: relative;
+            display: flex;
+            align-items: center;
+            /* overflow: hidden; Removed to allow tooltip to pop out top */
+        }
+
+        input[type="text"] {
+            width: 100%;
+            background-color: var(--input-bg);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            padding: 15px;
+            font-size: 1.2rem;
+            font-family: inherit;
+            font-weight: bold;
+            border-radius: 6px;
+            outline: none;
+            padding-right: 40px; 
+            z-index: 2;
+            position: relative;
+            background: transparent; /* Allows viewing layers if needed, but we keep bg on container mostly */
+            background-color: var(--input-bg);
+            /* Prevent zooming on focus in iOS */
+            font-size: 16px; 
+        }
+        
+        /* Restore font size for non-mobile if needed, but 1.2rem usually safe. 
+           Overriding back to 1.2rem. iOS zooms if < 16px. */
+        @media (min-width: 600px) {
+            input[type="text"] {
+                font-size: 1.2rem;
+            }
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(78, 201, 176, 0.2);
+        }
+
+        .live-preview {
+            position: absolute;
+            /* Positioned above the cursor now */
+            top: -32px; 
+            /* left is calculated by JS */
+            left: 15px; 
+            
+            color: var(--accent);
+            font-weight: bold;
+            font-size: 0.9rem;
+            pointer-events: none;
+            
+            white-space: nowrap;
+            z-index: 10;
+            background: #252526;
+            border: 1px solid var(--border);
+            padding: 4px 8px;
+            border-radius: 4px;
+            transition: left 0.05s linear, opacity 0.2s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        
+        /* Little arrow pointing down from tooltip */
+        .live-preview::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 10px; /* Rough alignment with start of text */
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: var(--border) transparent transparent transparent;
+        }
+
+        .error-shake {
+            animation: shake 0.3s cubic-bezier(.36,.07,.19,.97) both;
+            border-color: var(--danger) !important;
+        }
+
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-1px, 0, 0); }
+            20%, 80% { transform: translate3d(2px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+            40%, 60% { transform: translate3d(4px, 0, 0); }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #444; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #555; }
+        
+        .empty-msg {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-top: 50px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <span class="title">>_ Calculator</span>
+        <button id="clearHistoryBtn" class="clear-btn" title="Clear all history">Clear All</button>
+    </div>
+
+    <div class="history-container" id="historyList">
+        <div class="empty-msg">Start typing to calculate...</div>
+    </div>
+
+    <div class="input-wrapper">
+        <div class="input-group">
+            <input type="text" id="expressionInput" placeholder="Type expression..." autofocus autocomplete="off">
+            <span class="live-preview" id="livePreview"></span>
+        </div>
+        <div style="font-size: 0.75rem; color: #666; margin-top: 8px;">
+            Shortcuts: 'x' → *, '=' → +, P → %, T, E, D, ^ allowed
+        </div>
+    </div>
+</div>
+
+<script>
+    const inputField = document.getElementById('expressionInput');
+    const historyList = document.getElementById('historyList');
+    const livePreview = document.getElementById('livePreview');
+    const clearBtn = document.getElementById('clearHistoryBtn');
+    let history = JSON.parse(localStorage.getItem('calcHistory')) || [];
+    let clearConfirmTimer;
+
+    // Valid characters regex (Numbers, operators, parenthesis, decimal)
+    const validChars = /^[0-9+\-*/().%^tdeTDE]*$/;
+    
+    // Regex to detect invalid patterns:
+    // 1. Consecutive operators (e.g. ++, ..)
+    // 2. Multiple decimals in one number (e.g. 1.2.3 or .6.8.23)
+    const invalidPatterns = /([+\-*/.%^]{2,})|(\.[0-9]*\.)/;
+
+    // Canvas for measuring text width
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
+
+    // Initial Render
+    renderHistory();
+
+    // Helper: Clean AND Transform expression for Custom Operators
+    function parseExpression(expr) {
+        // 1. Basic Cleanup: Strip trailing operators/symbols
+        // Added % and TDE to strippable end chars
+        let cleaned = expr.replace(/[+\-*/.%^tdeTDE]+$/, '');
+        // Remove leading invalid operators (allow + - if needed, but simple block for now)
+        cleaned = cleaned.replace(/^[*/%^]+/, '');
+
+        // 2. Transform Power Operator
+        cleaned = cleaned.replace(/\^/g, '**');
+
+        // 3. Transform Business Operators (%, T, E, D)
+        
+        // %: Percent Value (200%5 -> 200 * 5 / 100)
+        // We use % symbol in the input, which is standard modulo in JS, but we override it here
+        cleaned = cleaned.replace(/(\d+(?:\.\d+)?)\%(\d+(?:\.\d+)?)/g, '($1 * $2 / 100)');
+        
+        // T: Add Tax (200T5 -> 210)
+        cleaned = cleaned.replace(/(\d+(?:\.\d+)?)[Tt](\d+(?:\.\d+)?)/g, '($1 * (1 + $2 / 100))');
+        
+        // D: Discount (200D5 -> 190)
+        cleaned = cleaned.replace(/(\d+(?:\.\d+)?)[Dd](\d+(?:\.\d+)?)/g, '($1 * (1 - $2 / 100))');
+        
+        // E: Extract Tax (210E5 -> 200)
+        cleaned = cleaned.replace(/(\d+(?:\.\d+)?)[Ee](\d+(?:\.\d+)?)/g, '($1 / (1 + $2 / 100))');
+
+        return cleaned;
+    }
+
+    // New Helper: Generate Detailed Display String (200T5 = 200 + 10)
+    function formatDisplayExpression(expr) {
+        let formatted = expr;
+        
+        // Helper to round for display
+        const round = (n) => Math.round(n * 100000) / 100000;
+        
+        // %: Percent (Value) -> 200%5 = 200 * 5 / 100 = 10
+        if (/\%/.test(formatted)) {
+            formatted = formatted.replace(/(\d+(?:\.\d+)?)\%(\d+(?:\.\d+)?)/gi, (match, base, rate) => {
+                const val = parseFloat(base) * parseFloat(rate) / 100;
+                return `${match} = ${base} * ${rate} / 100`;
+            });
+        }
+
+        // T: Tax (Add) -> 200T5 = 200 + 10
+        if (/T/i.test(formatted)) {
+            formatted = formatted.replace(/(\d+(?:\.\d+)?)T(\d+(?:\.\d+)?)/gi, (match, base, rate) => {
+                const val = parseFloat(base) * parseFloat(rate) / 100;
+                return `${match} = ${base} + ${round(val)}`;
+            });
+        }
+
+        // D: Discount (Sub) -> 200D5 = 200 - 10
+        if (/D/i.test(formatted)) {
+            formatted = formatted.replace(/(\d+(?:\.\d+)?)D(\d+(?:\.\d+)?)/gi, (match, base, rate) => {
+                const val = parseFloat(base) * parseFloat(rate) / 100;
+                return `${match} = ${base} - ${round(val)}`;
+            });
+        }
+
+        // E: Extract (Rev Tax) -> 210E5 = 210 / 1.05
+        if (/E/i.test(formatted)) {
+            formatted = formatted.replace(/(\d+(?:\.\d+)?)E(\d+(?:\.\d+)?)/gi, (match, base, rate) => {
+                const div = 1 + parseFloat(rate) / 100;
+                return `${match} = ${base} / ${round(div)}`;
+            });
+        }
+        
+        // ^: Square -> 4^2 = 4 * 4
+        if (/\^/.test(formatted)) {
+             formatted = formatted.replace(/(\d+(?:\.\d+)?)\^2/gi, (match, base) => {
+                return `${match} = ${base} * ${base}`;
+            });
+        }
+
+        return formatted;
+    }
+
+    // Event Listener: Input Handling
+    inputField.addEventListener('input', (e) => {
+        let val = e.target.value;
+        
+        // Convert x->*, =->+, p->% and tde->TDE
+        let newVal = val.replace(/x/gi, '*').replace(/=/g, '+').replace(/[p]/gi, '%').replace(/[tde]/g, c => c.toUpperCase());
+
+        // NEW: Auto-prepend last result if input is a single operator
+        // Checks if input is just one char (the operator) and history exists
+        if (newVal.length === 1 && /^[+\-*/%^]$/.test(newVal) && history.length > 0) {
+            newVal = history[history.length - 1].res + newVal;
+        }
+
+        if (!validChars.test(newVal) || invalidPatterns.test(newVal)) {
+            inputField.classList.add('error-shake');
+            setTimeout(() => inputField.classList.remove('error-shake'), 300);
+            // Updated to strip based on new validChars
+            newVal = newVal.replace(/[^0-9+\-*/().%^tdeTDE]/g, '');
+            while (invalidPatterns.test(newVal)) {
+                newVal = newVal.slice(0, -1);
+            }
+        }
+
+        if (inputField.value !== newVal) {
+            // Manage cursor position
+            const start = inputField.selectionStart;
+            const end = inputField.selectionEnd;
+            const lenDiff = newVal.length - inputField.value.length;
+            
+            inputField.value = newVal;
+            inputField.setSelectionRange(start + lenDiff, end + lenDiff);
+        }
+
+        updatePreview(newVal);
+    });
+
+    // Update preview position on click, keyup, select (cursor movement)
+    ['click', 'keyup', 'keydown', 'select', 'focus'].forEach(evt => {
+        inputField.addEventListener(evt, () => {
+             // Slight delay to allow UI to update
+             setTimeout(() => updatePreview(inputField.value), 0);
+        });
+    });
+
+    inputField.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            e.preventDefault();
+            inputField.value = '';
+            updatePreview('');
+            return;
+        }
+
+        if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            const items = historyList.querySelectorAll('.history-item');
+            if (items.length > 0) items[items.length - 1].focus();
+            return;
+        }
+
+        if (e.key === 'Enter') {
+            const expression = inputField.value.trim();
+            if (!expression) return;
+
+            try {
+                // Use parseExpression for transformation
+                const evalExpr = parseExpression(expression);
+                
+                if (!evalExpr) return; // Don't eval if empty after cleaning
+
+                const result = new Function('return ' + evalExpr)();
+                if (result === undefined || isNaN(result) || !isFinite(result)) throw new Error("Invalid");
+
+                addToHistory(expression, formatResult(result));
+                inputField.value = '';
+                livePreview.textContent = '';
+                livePreview.style.opacity = '0';
+                scrollToBottom();
+            } catch (err) {
+                inputField.classList.add('error-shake');
+                setTimeout(() => inputField.classList.remove('error-shake'), 300);
+            }
+        }
+    });
+
+    historyList.addEventListener('keydown', (e) => {
+        const item = e.target.closest('.history-item');
+        if (!item) return;
+
+        if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            const prev = item.previousElementSibling;
+            if (prev) prev.focus();
+        } else if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            const next = item.nextElementSibling;
+            if (next) next.focus();
+            else inputField.focus();
+        } else if (e.key === 'Enter') {
+            e.preventDefault();
+            const res = item.getAttribute('data-res');
+            if (res) appendResult(res);
+        }
+    });
+
+    // Clear Button Logic (Button State Confirmation)
+    clearBtn.addEventListener('click', () => {
+        if (clearBtn.getAttribute('data-confirm') === 'true') {
+            // Action: Confirmed Clear
+            history = [];
+            saveHistory();
+            renderHistory();
+            inputField.focus();
+            resetClearBtn();
+        } else {
+            // Action: Request Confirmation
+            clearBtn.setAttribute('data-confirm', 'true');
+            clearBtn.textContent = 'Confirm?';
+            clearBtn.style.background = 'var(--danger)';
+            clearBtn.style.color = 'white';
+            
+            clearConfirmTimer = setTimeout(() => {
+                resetClearBtn();
+            }, 3000);
+        }
+    });
+
+    function resetClearBtn() {
+        clearBtn.removeAttribute('data-confirm');
+        clearBtn.textContent = 'Clear All';
+        clearBtn.style.background = '';
+        clearBtn.style.color = '';
+        if (clearConfirmTimer) clearTimeout(clearConfirmTimer);
+    }
+
+    function updatePreview(expression) {
+        if (!expression) {
+            livePreview.textContent = '';
+            livePreview.style.opacity = '0';
+            return;
+        }
+
+        // 1. Calculate Result
+        let resultText = '';
+        try {
+            // Use parseExpression for instant preview
+            const evalExpr = parseExpression(expression);
+
+            if (evalExpr) {
+                const result = new Function('return ' + evalExpr)();
+                if (result !== undefined && !isNaN(result) && isFinite(result)) {
+                    resultText = '= ' + formatResult(result);
+                }
+            }
+        } catch (e) {
+            // Keep empty on error
+        }
+
+        livePreview.textContent = resultText;
+        livePreview.style.opacity = resultText ? '1' : '0';
+
+        // 2. Calculate Position (Follow Cursor)
+        updateCursorFollower();
+    }
+
+    function updateCursorFollower() {
+        const style = window.getComputedStyle(inputField);
+        context.font = style.font;
+        
+        // Text up to the cursor
+        const textBeforeCursor = inputField.value.substring(0, inputField.selectionStart);
+        
+        // Measure width
+        const textWidth = context.measureText(textBeforeCursor).width;
+        
+        // Calculate Left Position:
+        const paddingLeft = parseFloat(style.paddingLeft);
+        const scrollLeft = inputField.scrollLeft;
+        
+        let leftPos = paddingLeft + textWidth - scrollLeft;
+        
+        // Ensure it doesn't overlap the left padding visually if scrolled far
+        // Add small gap
+        leftPos += 5; 
+
+        livePreview.style.left = `${leftPos}px`;
+    }
+
+    function formatResult(num) {
+        return Math.round(num * 100000000) / 100000000;
+    }
+
+    function appendResult(res) {
+        inputField.value += res;
+        inputField.focus();
+        inputField.dispatchEvent(new Event('input'));
+    }
+
+    function addToHistory(expr, res) {
+        // Generate detailed view for history
+        const displayExpr = formatDisplayExpression(expr);
+        const item = { id: Date.now(), expr, displayExpr, res };
+        history.push(item);
+        saveHistory();
+        renderHistory();
+    }
+
+    function deleteItem(id) {
+        history = history.filter(item => item.id !== id);
+        saveHistory();
+        renderHistory();
+        inputField.focus();
+    }
+
+    function editItem(expr) {
+        inputField.value = expr;
+        inputField.focus();
+        inputField.dispatchEvent(new Event('input'));
+    }
+
+    function copyItem(text) {
+        // Fallback for environments blocking navigator.clipboard
+        const tempInput = document.createElement("textarea");
+        tempInput.value = text;
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        document.execCommand("copy");
+        document.body.removeChild(tempInput);
+        inputField.focus();
+    }
+
+    function saveHistory() {
+        localStorage.setItem('calcHistory', JSON.stringify(history));
+    }
+
+    function scrollToBottom() {
+        historyList.scrollTop = historyList.scrollHeight;
+    }
+
+    function renderHistory() {
+        if (history.length === 0) {
+            historyList.innerHTML = '<div class="empty-msg">History is empty</div>';
+            return;
+        }
+
+        historyList.innerHTML = history.map(item => `
+            <div class="history-item" tabindex="0" data-res="${item.res}">
+                <div class="calc-data" onclick="appendResult('${item.res}')" title="Click to append result">
+                    <span class="hist-expr">${escapeHtml(item.displayExpr || item.expr)}</span>
+                    <span class="hist-res">= ${item.res}</span>
+                </div>
+                <div class="actions">
+                    <button class="icon-btn" onclick="editItem('${escapeHtml(item.expr)}')" title="Edit">✎</button>
+                    <button class="icon-btn" onclick="copyItem('${item.res}')" title="Copy Result">❐</button>
+                    <button class="icon-btn" onclick="deleteItem(${item.id})" title="Delete">✖</button>
+                </div>
+            </div>
+        `).join('');
+        
+        scrollToBottom();
+    }
+
+    function escapeHtml(text) {
+        const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+        return text.toString().replace(/[&<>"']/g, m => map[m]);
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.target === inputField || e.ctrlKey || e.altKey || e.metaKey) return;
+        if (e.key.length !== 1) return;
+
+        // Updated regex to include new operators including %
+        const isMathChar = /^[0-9+\-*/().%^tdeTDE]$/.test(e.key);
+        const isAlias = ['x', 'X', '=', 'p', 'P'].includes(e.key);
+
+        if (!isMathChar && !isAlias) return;
+
+        const historyItem = e.target.closest('.history-item');
+        const isOperator = /^[+\-*/%^]$/.test(e.key) || isAlias;
+
+        if (historyItem && isOperator) {
+            e.preventDefault();
+            const res = historyItem.getAttribute('data-res');
+            if (res) {
+                let op = e.key;
+                if (op === 'x' || op === 'X') op = '*';
+                if (op === '=') op = '+';
+                if (op === 'p' || op === 'P') op = '%';
+                appendResult(res + op);
+            }
+            return;
+        }
+
+        e.preventDefault();
+        let char = e.key;
+        if (char === 'x' || char === 'X') char = '*';
+        if (char === '=') char = '+';
+        if (char === 'p' || char === 'P') char = '%';
+        if (/[tde]/.test(char)) char = char.toUpperCase();
+        appendResult(char);
+    });
+</script>
+
+</body>
+</html>
