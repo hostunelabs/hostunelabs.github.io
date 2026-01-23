@@ -533,6 +533,11 @@
             history = [];
             saveHistory();
             renderHistory();
+            
+            // Clear input box and preview
+            inputField.value = '';
+            updatePreview('');
+
             inputField.focus();
             resetClearBtn();
         } else {
