@@ -23,5 +23,10 @@
 		"hospital_code" : "TESTM",
 		"hospital_name" : "TTest Hospital",
 		"url" : "https://117.241.74.135:45000"
+	},
+	{
+		"hospital_code" : "TESTM2",
+		"hospital_name" : "TTest Hospital2",
+		"url" : "https://192.168.1.38:7000"
 	}
 ]
