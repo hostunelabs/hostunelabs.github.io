@@ -1,0 +1,32 @@
+[
+	{
+		"hospital_code" : "ANS",
+		"hospital_name" : "Ansar Hospital",
+		"url" : "https://202.88.227.59:62001"
+	},
+	{
+		"hospital_code" : "NAZ",
+		"hospital_name" : "Nazareth Hospital",
+		"url" : "https://103.38.89.107:61003"
+	},
+	{
+		"hospital_code" : "SVH",
+		"hospital_name" : "St Vincent Hospital",
+		"url" : "https://117.211.188.18:62000"
+	},
+	{
+		"hospital_code" : "AABIND",
+		"hospital_name" : "AABIND Hospital",
+		"url" : "https://117.241.79.192:62000"
+	},
+	{
+		"hospital_code" : "TESTM",
+		"hospital_name" : "TTest Hospital",
+		"url" : "https://116.68.89.3:62000"
+	},
+	{
+		"hospital_code" : "TESTM2",
+		"hospital_name" : "LLabTest",
+		"url" : "https://192.168.1.38:7000"
+	}
+]
