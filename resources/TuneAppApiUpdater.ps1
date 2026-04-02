@@ -4,7 +4,7 @@
 
 # --- Hardcoded Configuration ---
 $WebsiteName = "TuneAppApi"
-$DownloadUrl = "https://www.dropbox.com/scl/fi/rk8hgyxo7xrivxexav7qy/TuneAppApi.zip?rlkey=d46en1dcgzg4pccei2gb0dpxu&st=1yen4o0g&dl=1"
+$DownloadUrl = "https://hostune.in/resources/TuneAppApi.zip"
 
 
 # --- Pre-run Checks ---

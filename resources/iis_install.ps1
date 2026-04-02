@@ -32,7 +32,7 @@ Write-Host "`nStarting IIS Configuration Script..." -ForegroundColor Green
 # Define script variables
 $dotnetHostingUrl = "https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/8.0.0/dotnet-hosting-8.0.0-win.exe"
 $dotnetInstallerPath = "$env:TEMP\dotnet-hosting-8.0.0-win.exe"
-$tuneAppUrl = "https://www.dropbox.com/scl/fi/rk8hgyxo7xrivxexav7qy/TuneAppApi.zip?rlkey=d46en1dcgzg4pccei2gb0dpxu&st=1yen4o0g&dl=1"
+$tuneAppUrl = "https://hostune.in/resources/TuneAppApi.zip"
 $zipPath = "$env:TEMP\TuneAppApi.zip"
 $extractPath = "D:\Hostune\API\TuneAppApi"
 $mediaPath = "D:\Media\Pics"
