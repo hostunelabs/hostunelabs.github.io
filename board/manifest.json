@@ -1,0 +1,26 @@
+{
+  "name": "TuneBoard",
+  "short_name": "TuneBoard",
+  "start_url": "./index.htm",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "prefer_related_applications": false,
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "description": "Whiteboard application",
+  "icons": [
+    {
+      "src": "tuneboard.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "tuneboard.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
