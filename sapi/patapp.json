@@ -20,13 +20,13 @@
 		"url" : "https://117.241.79.192:62000"
 	},
 	{
-		"hospital_code" : "TESTM",
-		"hospital_name" : "TTest Hospital",
+		"hospital_code" : "TCLOUD",
+		"hospital_name" : "TCloud Hospital",
 		"url" : "https://116.68.89.3:62000"
 	},
 	{
-		"hospital_code" : "TESTM2",
-		"hospital_name" : "LLapTest",
+		"hospital_code" : "MYLAP",
+		"hospital_name" : "TMyLapTest",
 		"url" : "https://192.168.1.38:7000"
 	}
 ]
