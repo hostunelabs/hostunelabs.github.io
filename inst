@@ -5,10 +5,10 @@ while ($true) {
     Write-Host "        Hostune Setup Utility"
     Write-Host "====================================="
     Write-Host ""
-    Write-Host "1. Install PostgreSQL"
+    Write-Host "1. Install PG"
     Write-Host "2. Install IIS"
-    Write-Host "3. Run TuneApp API Updater"
-    Write-Host "4. Apply SMB Fix"
+    Write-Host "3. TuneApp API Updater"
+    Write-Host "4. Windows sharing issue fix"
     Write-Host "0. Exit"
     Write-Host ""
 
