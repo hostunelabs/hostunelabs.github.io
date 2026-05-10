@@ -6,7 +6,7 @@ $menu = @"
 
 1. IIS Install
 2. TuneApp API Updater
-3. Windows Share Fix
+3. SMB Fix
 
 0. Exit
 
@@ -45,7 +45,8 @@ while ($true)
 
         "0"
         {
-            break
+            Write-Host "`nExiting...`n"
+            return
         }
 
         default
