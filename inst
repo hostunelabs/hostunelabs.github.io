@@ -1,58 +1,51 @@
-$menu = @"
-
-====================================
-             Hostune
-====================================
-
-1. IIS Install
-2. TuneApp API Updater
-3. Windows sharing issue Fix
-
-0. Exit
-
-====================================
-"@
-
-while ($true)
-{
+while ($true) {
     Clear-Host
-    Write-Host $menu
+
+    Write-Host "====================================="
+    Write-Host "        Hostune Setup Utility"
+    Write-Host "====================================="
+    Write-Host ""
+    Write-Host "1. Install PostgreSQL"
+    Write-Host "2. Install IIS"
+    Write-Host "3. Run TuneApp API Updater"
+    Write-Host "4. Apply SMB Fix"
+    Write-Host "0. Exit"
+    Write-Host ""
 
     $choice = Read-Host "Select an option"
 
-    switch ($choice)
-    {
-        "1"
-        {
-            Write-Host "`nRunning IIS Install...`n"
+    switch ($choice) {
+
+        "1" {
+            irm "https://hostune.in/resources/pg_install.ps1" | iex
+        }
+
+        "2" {
             irm "https://hostune.in/resources/iis_install.ps1" | iex
-            Pause
         }
 
-        "2"
-        {
-            Write-Host "`nRunning TuneApp API Updater...`n"
+        "3" {
             irm "https://hostune.in/resources/TuneAppApiUpdater.ps1" | iex
-            Pause
         }
 
-        "3"
-        {
-            Write-Host "`nRunning SMB Fix...`n"
+        "4" {
             irm "https://hostune.in/resources/smbfix.ps1" | iex
-            Pause
         }
 
-        "0"
-        {
-            Write-Host "`nExiting...`n"
-            return
+        "0" {
+            Write-Host ""
+            Write-Host "Exiting..."
+            break
         }
 
-        default
-        {
-            Write-Host "`nInvalid option.`n"
-            Pause
+        default {
+            Write-Host ""
+            Write-Host "Invalid option selected."
         }
+    }
+
+    if ($choice -ne "0") {
+        Write-Host ""
+        Pause
     }
 }
