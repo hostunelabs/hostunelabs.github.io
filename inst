@@ -5,10 +5,8 @@ while ($true) {
     Write-Host "        Hostune Setup Utility"
     Write-Host "====================================="
     Write-Host ""
-    Write-Host "1. Install PG"
-    Write-Host "2. Install IIS"
-    Write-Host "3. TuneApp API Updater"
-    Write-Host "4. Windows sharing issue fix"
+    Write-Host "1. TuneApp API Updater"
+    Write-Host "2. Windows sharing issue fix"
     Write-Host "0. Exit"
     Write-Host ""
 
@@ -16,19 +14,19 @@ while ($true) {
 
     switch ($choice) {
 
-        "1" {
+        "111" {
             irm "https://hostune.in/resources/pg_install.ps1" | iex
         }
 
-        "2" {
+        "112" {
             irm "https://hostune.in/resources/iis_install.ps1" | iex
         }
 
-        "3" {
+        "1" {
             irm "https://hostune.in/resources/TuneAppApiUpdater.ps1" | iex
         }
 
-        "4" {
+        "2" {
             irm "https://hostune.in/resources/smbfix.ps1" | iex
         }
 
