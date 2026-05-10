@@ -7,6 +7,7 @@ while ($true) {
     Write-Host ""
     Write-Host "1. TuneApp API Updater"
     Write-Host "2. Windows sharing issue fix"
+    Write-Host ""
     Write-Host "0. Exit"
     Write-Host ""
 
