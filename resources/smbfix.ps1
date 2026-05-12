@@ -1,9 +1,13 @@
+# ============================================================
+# SMB Compatibility Fix for Windows 10 / 11
 # Run PowerShell as Administrator
+# ============================================================
 
 Write-Host "Applying SMB compatibility settings..." -ForegroundColor Cyan
 
 # -------------------------------------------------------
-# Allow insecure guest logons (same as attached .reg file)
+# Allow insecure guest logons
+# (Required for NAS/devices that use guest access)
 # -------------------------------------------------------
 
 New-Item `
@@ -18,6 +22,7 @@ Set-ItemProperty `
 
 # -------------------------------------------------------
 # Disable SMB client security signature requirement
+# (Allows connecting to devices that don't support signing)
 # -------------------------------------------------------
 
 Set-SmbClientConfiguration `
@@ -27,6 +32,7 @@ Set-SmbClientConfiguration `
 
 # -------------------------------------------------------
 # Disable SMB server security signature requirement
+# (Allows other devices to connect to this PC without signing)
 # -------------------------------------------------------
 
 Set-SmbServerConfiguration `
@@ -35,24 +41,8 @@ Set-SmbServerConfiguration `
     -Force
 
 # -------------------------------------------------------
-# Optional: Enable SMB1 protocol
-# (Needed only for very old NAS/devices)
+# Done
 # -------------------------------------------------------
-
-Enable-WindowsOptionalFeature `
-    -Online `
-    -FeatureName SMB1Protocol `
-    -NoRestart
-
-# -------------------------------------------------------
-# Turn OFF Smart App Control
-# -------------------------------------------------------
-
-Set-ItemProperty `
-    -Path "HKLM:\SYSTEM\CurrentControlSet\Control\CI\Policy" `
-    -Name "VerifiedAndReputablePolicyState" `
-    -Type DWord `
-    -Value 0
 
 Write-Host ""
 Write-Host "Completed. Restart Windows for all changes to take effect." -ForegroundColor Green
