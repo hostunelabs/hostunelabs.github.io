@@ -115,8 +115,8 @@
 	},
 	{
 		"code" : "MYLAP",
-		"url" : "https://192.168.1.38:7000",
-		"url2" : "https://192.168.1.38:7000"
+		"url" : "https://192.168.1.111:7000",
+		"url2" : "https://192.168.1.111:7000"
 	},
 	{
 		"code" : "MYTEST",
@@ -248,7 +248,12 @@
 	{
 		"code" : "HAYATB",
 		"url" : "https://app.hostune.in:81/api?clientId=HAYATBNR&path=",
-		"url2" : "https://192.168.1.251:62001"
+		"url2" : "https://192.168.1.251:62000"
+	},
+	{
+		"code" : "FMC",
+		"url" : "https://103.199.161.136:62000",
+		"url2" : "https://192.168.1.251:62000"
 	}
 
 ]
