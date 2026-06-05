@@ -1,0 +1,1 @@
+https://github.com/cyanfish/naps2/releases/download/v8.2.1/naps2-8.2.1-win-x64.msi
