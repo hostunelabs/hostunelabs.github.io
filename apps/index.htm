@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Get the App</title>
+<style>
+  body {
+    font-family: system-ui, -apple-system, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    background: #f7f7f8;
+    text-align: center;
+  }
+  .links {
+    display: none; /* shown only for desktop via JS */
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 20px;
+  }
+  .links a {
+    padding: 12px 28px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    color: #fff;
+  }
+  .play { background: #34a853; }
+  .apple { background: #000; }
+  h2 { color: #222; }
+</style>
+</head>
+<body>
+
+<div id="content">
+  <p>Redirecting...</p>
+</div>
+
+<div class="links" id="desktopLinks">
+  <h2>Choose your platform</h2>
+  <a class="play" href="https://play.google.com/store/apps/dev?id=8566285000560481139" target="_blank">Get it on Google Play</a>
+  <a class="apple" href="https://apps.apple.com/in/developer/hostune-labs-private-limited/id1823617299" target="_blank">Download on the App Store</a>
+</div>
+
+<script>
+  const ua = navigator.userAgent.toLowerCase();
+  const isIpad = ua.includes("ipad") || (ua.includes("macintosh") && "ontouchend" in document);
+  const isAndroid = ua.includes("android");
+  const isIOS = /iphone|ipod/.test(ua) || isIpad;
+
+  if (isAndroid) {
+    window.location.replace("https://play.google.com/store/apps/dev?id=8566285000560481139");
+  } else if (isIOS) {
+    window.location.replace("https://apps.apple.com/in/developer/hostune-labs-private-limited/id1823617299");
+  } else {
+    // Desktop / unknown device — show both options instead of redirecting
+    document.getElementById("content").style.display = "none";
+    document.getElementById("desktopLinks").style.display = "flex";
+  }
+</script>
+
+<noscript>
+  <p>Please enable JavaScript, or choose:</p>
+  <a href="https://play.google.com/store/apps/dev?id=8566285000560481139">Google Play</a> |
+  <a href="https://apps.apple.com/in/developer/hostune-labs-private-limited/id1823617299">App Store</a>
+</noscript>
+
+</body>
+</html>
