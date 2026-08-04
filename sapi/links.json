@@ -53,6 +53,11 @@
 		"url2" : "https://192.168.1.251:61003"
 	},
 	{
+		"code" : "NAZDUMMY",
+		"url" : "https://histune.nazarethshillong.in:63001",
+		"url2" : "https://192.168.1.4:63001"
+	},
+	{
 		"code" : "LIFELINE",
 		"url" : "https://103.154.55.27:62000",
 		"url2" : "https://192.168.1.251:62000"
