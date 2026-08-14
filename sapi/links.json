@@ -105,8 +105,8 @@
 	,
 	{
 		"code" : "HOLYCARE",
-		"url" : "https://103.119.171.60:62000",
-		"url2" : "https://192.168.1.251:62000"
+		"url" : "https://holycarelabs.in:62000",
+		"url2" : "https://192.168.20.251:62000"
 	},
 	{
 		"code" : "DEVIPRASAD",
