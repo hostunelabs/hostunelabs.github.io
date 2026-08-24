@@ -251,6 +251,11 @@
 		"url2" : "https://116.68.89.3:62000"
 	},
 	{
+		"code" : "ANUPAMA",
+		"url" : "https://116.68.89.3:60061",
+		"url2" : "https://116.68.89.3:60061"
+	},
+	{
 		"code" : "HAYATB",
 		"url" : "https://app.hostune.in:81/api?clientId=HAYATBNR&path=",
 		"url2" : "https://192.168.1.251:62000"
