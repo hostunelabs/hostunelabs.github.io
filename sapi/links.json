@@ -319,6 +319,11 @@
 		"code" : "BETTER",
 		"url" : "https://app.hostune.in:81/api?clientId=BHMC&path=",
 		"url2" : "https://192.168.1.251:62000"
+	},
+	{
+		"code" : "BETTER2",
+		"url" : "https://192.168.1.251:62000",
+		"url2" : "https://192.168.1.251:62000"
 	}
 
 ]
