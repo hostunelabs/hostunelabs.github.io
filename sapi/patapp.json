@@ -28,5 +28,10 @@
 		"hospital_code" : "MYLAP",
 		"hospital_name" : "TMyLapTest",
 		"url" : "https://192.168.1.38:7000"
+	},
+	{
+		"hospital_code" : "ANUPAMA",
+		"hospital_name" : "Anupama Hospital",
+		"url" : "https://103.153.92.149:62000"
 	}
 ]
