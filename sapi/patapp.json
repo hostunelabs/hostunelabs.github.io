@@ -33,5 +33,10 @@
 		"hospital_code" : "ANUPAMA",
 		"hospital_name" : "Anupama Hospital",
 		"url" : "https://103.153.92.149:62000"
+	},
+	{
+		"hospital_code" : "PNM",
+		"hospital_name" : "PNM Hospital, Nallila",
+		"url" : "https://117.216.139.54:62000"
 	}
 ]
