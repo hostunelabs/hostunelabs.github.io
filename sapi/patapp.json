@@ -38,5 +38,30 @@
 		"hospital_code" : "PNM",
 		"hospital_name" : "PNM Hospital, Nallila",
 		"url" : "https://117.216.139.54:62000"
+	},
+	{
+		"hospital_code" : "DAYAN",
+		"hospital_name" : "Daya Hospital, Neriamangalam",
+		"url" : "https://103.171.224.210:62000"
+	},
+	{
+		"hospital_code" : "DAYAT",
+		"hospital_name" : "Daya Hospital, Thodupuzha",
+		"url" : "https://103.171.224.27:62000"
+	},
+	{
+		"hospital_code" : "GEMS",
+		"hospital_name" : "GEMS, Kulathupuzha",
+		"url" : "https://117.247.101.155:62000"
+	},
+	{
+		"hospital_code" : "SJMH",
+		"hospital_name" : "St Joseph`s Mission Hospital, Anchal",
+		"url" : "https://59.92.235.228:62001"
+	},
+	{
+		"hospital_code" : "BETTER",
+		"hospital_name" : "Better Health, Karalikonam, Ayoor, Kollam",
+		"url" : "https://117.241.74.228:62000"
 	}
 ]
