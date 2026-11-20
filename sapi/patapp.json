@@ -63,5 +63,10 @@
 		"hospital_code" : "BETTER",
 		"hospital_name" : "Better Health, Karalikonam, Ayoor, Kollam",
 		"url" : "https://117.241.74.228:62000"
+	},
+	{
+		"hospital_code" : "GEORA",
+		"hospital_name" : "Geora Hospital, Thaliparamba",
+		"url" : "https://59.96.61.158:62000"
 	}
 ]
